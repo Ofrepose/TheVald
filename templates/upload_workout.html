@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+</head>
+
+<body>
+<div class='topBar'>
+
+  <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+  <div id = 'ws_nameMain'><div id = 'aboveNameMain'>.the vald.</div>
+        <div id = 'undernameMain'>Upload {{this_workout.name}} workout</div>
+      </div>
+  
+
+
+  </div>
+
+
+
+
+  <div class= indexMain id = "mainImage">
+
+
+
+    <div id="mainBox"></div>
+
+        <div id="mainContent">
+
+
+          <div class = 'uploadFormDiv'>
+
+          <form id= 'upload_workout' method = "POST" action = "{{url_for('upload_workout', workout_id = this_workout.id)}}" enctype="multipart/form-data">
+
+            <div class="uploadDescription">
+            <div class='uploadFormTitle'>Workout Description:</div>
+
+            <textarea id='uploadTextArea' name='description' rows='5' cols='5' required style="width: 100%; height: 50px;" placeholder="Describe your workout..."></textarea>
+          </div>
+
+        <div class="uploadParts">
+
+          <div class="uploadFormTitle">Workout Focus:</div>
+
+          <label for="full_body">Full Body
+
+         <input class ='includeWeek' id="fb" type = 'checkbox' name='full_body' value='yes' placeholder="Include days of the week" onclick="fullBody()" /></label>
+
+         <label for="upper_body">Upper Body
+
+         <input class='includeWeek' id="ub" type = 'checkbox' name='upper_body' value='yes' placeholder="Include days of the week" onclick="upperBody()" /></label>
+
+         <label for="lower_body">Lower Body
+         <input class='includeWeek' id="lb" type = 'checkbox' name='lower_body' value='yes' placeholder="Include days of the week" onclick="lowerBody()" /></label>
+
+
+         </div>
+
+         <div class="bodyDiv">
+           
+          <div id = fullBodyDefault></div>
+
+          <div id = fullBody></div>
+
+          <div id = upperBody></div>
+
+          <div id = lowerBody></div>
+
+         </div>      
+
+        </form>
+
+      </div>
+
+   
+  
+</div>
+
+  </div>
+
+  <div class='bottomBar'>
+
+    <div class="button-container-13" id = 'createExerciseButton' >
+                                
+
+
+                    <button id='work' type="button" name="Hover" onclick="createE()">Upload</button>
+                           
+                </div> 
+
+
+    </div>
+
+<script>
+
+  function fullBody(){
+
+    if (document.getElementById('fullBody').style.display == 'inline-block'){
+      document.getElementById('fullBody').style.display = 'none';
+      document.getElementById('fullBodyDefault').style.display = 'inline-block';
+    }
+
+    else if (document.getElementById('fullBodyDefault').style.display == 'inline-block'){
+      document.getElementById('fullBodyDefault').style.display = 'none';
+      document.getElementById('fullBody').style.display = 'inline-block';    
+      document.getElementById('upperBody').style.display = 'none';
+      document.getElementById('lowerBody').style.display = 'none';
+    }
+    else if (document.getElementById('upperBody').style.display == 'inline-block'){
+      document.getElementById('ub').checked = !document.getElementById('ub').checked;
+      document.getElementById('fullBody').style.display = 'inline-block';      
+      document.getElementById('upperBody').style.display = 'none';
+      document.getElementById('lowerBody').style.display = 'none';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+    else if (document.getElementById('lowerBody').style.display == 'inline-block'){
+      document.getElementById('lb').checked = !document.getElementById('lb').checked;
+      document.getElementById('fullBody').style.display = 'inline-block';      
+      document.getElementById('upperBody').style.display = 'none';
+      document.getElementById('lowerBody').style.display = 'none';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+    else{
+      document.getElementById('fullBody').style.display = 'inline-block';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+
+    
+
+  }
+
+  function upperBody(){
+     if (document.getElementById('upperBody').style.display == 'inline-block'){
+      document.getElementById('upperBody').style.display = 'none';
+      document.getElementById('fullBodyDefault').style.display = 'inline-block';
+    }
+
+    else if (document.getElementById('fullBodyDefault').style.display == 'inline-block'){
+      document.getElementById('fullBodyDefault').style.display = 'none';
+      document.getElementById('fullBody').style.display = 'none';    
+      document.getElementById('upperBody').style.display = 'inline-block';
+      document.getElementById('lowerBody').style.display = 'none';
+    }
+    else if (document.getElementById('fullBody').style.display == 'inline-block'){
+      document.getElementById('fb').checked = !document.getElementById('fb').checked;
+      document.getElementById('fullBody').style.display = 'none';      
+      document.getElementById('upperBody').style.display = 'inline-block';
+      document.getElementById('lowerBody').style.display = 'none';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+    else if (document.getElementById('lowerBody').style.display == 'inline-block'){
+      document.getElementById('lb').checked = !document.getElementById('lb').checked;
+      document.getElementById('fullBody').style.display = 'none';      
+      document.getElementById('upperBody').style.display = 'inline-block';
+      document.getElementById('lowerBody').style.display = 'none';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+    else{
+      document.getElementById('upperBody').style.display = 'inline-block';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+  }
+
+  function lowerBody(){
+    if (document.getElementById('lowerBody').style.display == 'inline-block'){
+      document.getElementById('lowerBody').style.display = 'none';
+      document.getElementById('fullBodyDefault').style.display = 'inline-block';
+    }
+
+    else if (document.getElementById('fullBodyDefault').style.display == 'inline-block'){
+      document.getElementById('fullBodyDefault').style.display = 'none';
+      document.getElementById('fullBody').style.display = 'none';    
+      document.getElementById('upperBody').style.display = 'none';
+      document.getElementById('lowerBody').style.display = 'inline-block';
+    }
+    else if (document.getElementById('fullBody').style.display == 'inline-block'){
+      document.getElementById('fb').checked = !document.getElementById('fb').checked;
+      document.getElementById('fullBody').style.display = 'none';      
+      document.getElementById('upperBody').style.display = 'none';
+      document.getElementById('lowerBody').style.display = 'inline-block';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+    else if (document.getElementById('upperBody').style.display == 'inline-block'){
+      document.getElementById('ub').checked = !document.getElementById('ub').checked;
+      document.getElementById('fullBody').style.display = 'none';      
+      document.getElementById('upperBody').style.display = 'none';
+      document.getElementById('lowerBody').style.display = 'inline-block';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+    else{
+      document.getElementById('lowerBody').style.display = 'inline-block';
+      document.getElementById('fullBodyDefault').style.display = 'none';
+    }
+
+  }
+
+
+
+
+
+  function goBack(){
+      window.location.href = "{{url_for('main')}}"; 
+    }
+
+  function createE(){
+        var form = document.getElementById('upload_workout');
+        form.submit()
+    }
+
+
+</script>
+
+</body>
+</html>

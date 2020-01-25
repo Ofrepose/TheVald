@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+    <div class= indexMain id = "mainImage">
+
+        <div id="mainBox" ></div>
+
+        <div id="mainContentExercises" >
+
+            <div class="titleHead" style="margin: 10px auto;">{{this_exercise.name.capitalize()}}</div>
+
+            
+                <div class='exercises'>
+
+                    <div id = 'deleteConfirmPrompt'>
+                        
+                        Are you sure you would like to delete this exercise?
+
+                    </div>
+    	
+    	      
+
+    	                  
+
+                           <div class="button-container-2" id = addNew>
+                                <a style='width: 100%;' href = "{{url_for('del_Exercise', w_id = id, exercise_id = exercise_id)}}">
+                                    <span class="mas">Confirm</span>
+                                    <button type="button" name="Hover">Delete</button>
+                                </a>
+                            </div>
+
+    	
+                    
+
+                            <div class="button-container-1" id = back>
+                                
+                                <span class="mas">Back</span>
+                                <button id='work' type="button" name="Hover" onclick="goBack()">Cancel</button>
+                           
+                        </div>
+    	       
+
+
+                   
+
+                </div>
+
+           
+
+           
+    </div>
+
+<script>
+    
+    function showAdd(){
+        document.getElementById('createExercise').style.display = 'flex';
+        document.getElementById('addNew').style.display = 'none';
+        document.getElementById('mainContentExercises').style.display ='none';
+    }
+
+    function cancel(){
+        document.getElementById('createExercise').style.display = 'none';
+        document.getElementById('addNew').style.display = 'block';
+        document.getElementById('mainContentExercises').style.display ='flex';
+    }
+
+    function goBack(){
+        window.location.href = "{{url_for('main')}}";
+    }
+
+</script>
+
+</body>
+
+</html>

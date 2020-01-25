@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />	
+
+</head>
+
+<body>
+
+    <!-- <form method = "POST" action = "{{url_for('createWorkout')}}" enctype="multipart/form-data">
+
+        <input type = "text" name = "name" placeholder="name of workout" focus required />
+        <input type = "submit" name = "submit" value ="create Workout">
+
+    </form> -->
+
+
+    <div class= indexMain id = "mainImage">
+
+    <div id="mainBox" ></div>
+        <div id="mainContentExercises" >
+    <div class="titleHead" style="margin: 10px auto;">{{thisWorkout.name}}</div>
+    {% if all_e | length > 0 %}
+    <div class='exercises'>
+    {% for a in all_e %}
+    	
+    	<div class='exercisesContent'>
+    	<strong>{{a.name}}</strong><br>
+    	Sets: {{a.sets}}<br>
+    	Reps: {{a.reps}}<br>
+        Weight: {{a.weight}} lbs<br>
+    	{% if a.rest_between_minutes == 0 %}
+    		Rest time: {{a.rest_between_seconds}} Seconds
+    	{% endif %}
+    	{% if a.rest_between_minutes > 0 %}
+    		Rest time: {{a.rest_between_minutes}}:{{a.rest_between_seconds}}
+    	{% endif %}<br>
+    	Time for set: {{a.time_for_set}}<br>
+    	<!-- have link here for beginning workout and countdown -->
+    	<a  style='width: 100%;' href = "{{url_for('beginWorkout_weight', workout_id = thisWorkout.id, exercise_id = a.id)}}">Begin Workout</a><br>
+        <a  style='width: 100%;' href = "{{url_for('del_Exercise', exercise_id = a.id,w_id = thisWorkout.id)}}">Delete Exercise</a><br>
+    	</div>
+    {% endfor %}
+    <div class = 'buttonArea'><div id = 'addNew' onclick="showAdd()">Add Exercise</div> </div>
+    <div id = 'backButton'><div id = 'back' onclick="goBack()">Back</div> </div>
+    	</div>
+    {% endif %}
+
+     <!-- <form method = "POST" action = "{{url_for('createWorkout')}}" enctype="multipart/form-data">
+
+        <input type = "text" name = "name" placeholder="name of workout" focus required />
+        <input type = "submit" name = "submit" value ="create Workout">
+
+    </form> -->
+
+
+    
+    </div>
+
+    
+
+
+
+
+
+    <form id= 'createExercise' method = "POST" action = "{{url_for('addExercise', thisWorkout_id = thisWorkout.id)}}" enctype="multipart/form-data" style="margin:0 auto;">
+    	<input type = "text" name = "exerciseName" placeholder="exerciseName" focus required style="width: 100%;" />
+    	<input type = "number" name = "sets" placeholder="How Many Sets?" required style="width: 100%;" /><br>
+    	<input type = "number" name = "reps" placeholder="How Many Reps?" required style="width: 100%;" /><br>
+        <!-- <input type = "number" name = "weight" placeholder="Weight Amount" required style="width: 100%;" /><br> -->
+    	<input type="number" name = "restBetweenMinutes" placeholder="Minutes" required style="margin: 0 auto" /> 
+    	<input type="number" name = "restBetweenSeconds" placeholder="Seconds" required style="margin: 0 auto" /><br>
+    	<input type="number" name = "timeForSet" placeholder="Time to do set" required style="width: 100%;" /><br>
+    	<input type = "submit" name = "submit" value = "create exercise">
+        <div class = 'buttonArea'><div id = 'addNew' onclick="cancel()">Cancel</div> </div>
+    </form>
+</div>
+
+<script>
+    
+
+    function cancel(){
+        document.getElementById('createExercise').style.display = 'none';
+        document.getElementById('addNew').style.display = 'block';
+        document.getElementById('mainContentExercises').style.display ='flex';
+    }
+
+    function goBack(){
+        window.location.href = "{{url_for('main')}}";
+    }
+
+
+
+
+</script>
+
+</body>
+</html>

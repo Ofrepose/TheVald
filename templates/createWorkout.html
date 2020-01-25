@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+
+</head>
+
+<body>
+
+   <div class='topBar'>        
+
+        <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+
+       
+        
+        
+
+    </div>
+
+	<div class= indexMain id = "mainImage">
+
+    <div id="mainBox"></div>
+        <div id="mainContent" style="min-width: 60vw;">
+        	<form id='nameExercise' method = "POST" action = "{{url_for('createWorkout')}}" enctype="multipart/form-data">
+
+        <input type = "text" maxlength = "25" name = "name" placeholder="name of workout" id=name focus required />
+        
+        
+
+        
+
+    </form>
+  
+</div>
+
+  </div>
+
+<div class='bottomBar'>
+    
+
+    
+
+    <div class="button-container-13" id = 'createRoutine' >                            
+                    
+
+                    <button id='work' type="button" name="Hover" onclick="createE()">Create Exercise</button>
+                           
+                </div> 
+
+
+    </div>
+    
+
+<script>
+  function createE(){
+    var valueCheck = document.getElementById('name').value;
+      
+      if (valueCheck != ''){        
+        
+        var form = document.getElementById('nameExercise');
+        form.submit();
+        
+      }
+      else{
+        alert("Please enter a name for Routine");
+        
+      }
+    }
+
+    function goBack(){
+      window.location.href = "{{url_for('main')}}"; 
+    }
+
+</script>
+
+</body>
+</html>

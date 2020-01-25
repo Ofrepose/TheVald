@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>workoutyourballs</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class='topBar'>        
+
+        <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+
+        <div id = 'ws_nameMain'><div id = 'aboveNameMain'>.the vald.</div>
+        <div id = 'undernameMain'>{{user.name_first}} {{user.name_last}}</div>
+      </div>
+
+      
+        
+        
+
+    </div>
+
+    <div class= indexMain id = "mainImage">
+
+        <div id="mainBox" ></div>
+
+        <div id="mainContentExercises" >
+
+            <div class="titleHead" style="margin: 10px auto;" >{{thisWorkout.name.capitalize()}}</div> 
+
+            {% if all_e | length > 0 %}
+
+                <div class='exercises'>
+
+                    {% for a in all_e %}
+    	
+    	               <div class='exercisesContent'>
+
+    	                    <a style='width: 100%; height: 25px;' href = "{{url_for('editExercise',thisWorkout_id = thisWorkout.id, thisExercise_id = a.id)}}"><div class = exerciseNameDiv><div class=exerciseNameTitle >{{a.name.upper()}}</div></div></a>
+
+    	                   <div class="exercisesContentMain">
+
+                                Sets: {{a.sets}}<br>
+
+    	                       Reps: {{a.reps}}<br>
+
+    	                       {% if a.rest_between_minutes == 0 %}
+
+    		                      Rest time: {{a.rest_between_seconds}} Seconds
+
+    	                       {% endif %}
+
+    	                       {% if a.rest_between_minutes > 0 %}
+
+    		                      Rest time: {{a.rest_between_minutes}}:{{a.rest_between_seconds}}
+
+    	                       {% endif %}<br>
+
+    	                       Time for set: {{a.time_for_set}} <br>
+
+                               {% if a.previous_weight != 0 %}
+
+                                Previous Weight: {{a.previous_weight}}
+
+                                {% endif %}
+                              
+
+                            </div>
+
+                            <br>
+
+                            <a style='width: 100%;' href = "{{url_for('beginWorkout_weight', workout_id = thisWorkout.id, exercise_id = a.id)}}"><div class='goButton' class='pullDown' >GO!</div></a>
+
+                           <!--  <a style='width: 100%;' href = "{{url_for('beginWorkout_weight', workout_id = thisWorkout.id, exercise_id = a.id)}}"><div id='startExerciseButton' class='pullDown' ></div></a> -->
+
+                           
+    	
+
+                            <!-- <div class="button-container-1">
+                                <a  style='width: 100%;' href = "{{url_for('del_Exercise_Confirm', exercise_id = a.id,w_id = thisWorkout.id)}}">
+                                <span class="mas">Delete</span>
+                                <button id='work' type="button" name="Hover">Delete</button>
+                            </a>
+                        </div> -->    	               
+
+    	               </div>
+
+
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+            {% if all_e | length < 1 %}
+
+                <div class='exercises'>                    
+        
+                       <div class='exercisesContent'>
+
+                       </div>
+
+                </div>
+
+            {% endif %}
+
+            
+
+          
+          
+            
+        </div>
+
+        <div id='addExerciseOptionsDiv'>
+
+            
+
+            {% if all_user_e|length > 0 %}
+            
+            <div class = 'addExerciseOptions' onclick="showTemplates()">
+                
+                Use previous Exercise template
+
+            </div>
+
+            {% endif %}
+
+            <div class = 'addExerciseOptions' onclick="showAdd()">
+                
+                Create new Exercise
+
+            </div>
+
+        </div>
+
+
+        <div id='addExerciseTemplateDiv'>
+
+
+            {% for u in range(unique_names|length) %}
+                 <a class='addExerciseTemplateNames' href="{{url_for('addExerciseFromTemplate', thisWorkout_id = thisWorkout.id, e_id = name_id[u])}}">{{unique_names[u]}}</a>
+            {% endfor %}
+
+           
+
+          
+        </div>
+
+
+
+
+
+
+
+
+        <form id= 'createExercise' method = "POST" action = "{{url_for('addExercise', thisWorkout_id = thisWorkout.id)}}" enctype="multipart/form-data" style="margin:0 auto;">
+
+    	   <input type = "text" name = "exerciseName" placeholder="Name of Exercise" focus required style="width: 100%;" />
+ 
+    	   <input type = "number" name = "sets" placeholder="How Many Sets?" required style="width: 100%;" /><br>
+
+    	   <input type = "number" name = "reps" placeholder="How Many Reps?" required style="width: 100%;" /><br>
+        
+    	   <input type="number" name = "restBetweenMinutes" placeholder="Minutes" required style="margin: 0 auto" /> 
+
+    	   <input type="number" name = "restBetweenSeconds" placeholder="Seconds" required style="margin: 0 auto" /><br>
+
+    	   <input type="number" name = "timeForSet" placeholder="Time to do set (seconds)" required style="width: 100%;" /><br>
+
+           
+
+        </form>
+
+                
+
+           
+
+        <div id = 'deletePrompt'></div>
+
+        {% if all_e|length < 1 %}
+  <div id = 'helpBoxFirstWorkout'>
+    
+    <div id = 'helpBoxFirstInside'>Create your first exercise by clicking the button below!</div>
+
+  </div>
+  <div id='helpArrowWorkout'></div>
+{% endif %}
+
+        <!-- <div class="button-container-2" id = 'addNew'>
+                                
+                <span class="mas">Add Exercise</span>
+
+                <button id='work' onclick="showAdd()" type="button" name="Hover">Add Exercise</button>
+                           
+            </div> -->
+
+            <br>
+
+            <!-- <div class="button-container-2" id = 'back'>
+                                
+                <span class="mas">Back</span>
+
+                <button id='work3' onclick="goBack()" type="button" name="Hover">Back</button>
+                           
+            </div> -->
+
+    </div>
+
+    <div class='bottomBar'>
+    
+
+    <div id='addIcon2' class='pullDown' onclick="showAddOptions()" ></div>
+
+    <div class="button-container-2" id = 'createExerciseButton' >
+                                
+                    <span class="mas" >Create Exercise</span>
+
+                    <button id='work' type="button" name="Hover" onclick="createE()">Create Exercise</button>
+                           
+                </div> 
+
+
+    </div>
+
+<script>
+
+    document.getElementById('createExerciseButton').style.display='none';
+
+
+
+    function showTemplates(){
+        document.getElementById('addExerciseOptionsDiv').style.display='none';
+        document.getElementById('addExerciseTemplateDiv').style.display='flex';
+        
+    }
+
+    function showAddOptions(){
+        if (document.getElementById('helpBoxFirstWorkout') != null){
+            document.getElementById('helpBoxFirstWorkout').style.display = 'none';
+            document.getElementById('helpArrowWorkout').style.display = 'none';           
+            document.getElementById('createExerciseButton').style.display='flex';            
+            document.getElementById('addIcon2').style.display='none';
+            document.getElementById('addExerciseOptionsDiv').style.display='flex'; 
+        }
+
+        document.getElementById('addIcon2').style.display='none';
+        document.getElementById('mainContentExercises').style.display ='none';
+        document.getElementById('addExerciseOptionsDiv').style.display='flex'; 
+    }
+    
+    
+    function showAdd(){
+        if (document.getElementById('helpBoxFirstWorkout') != null){
+            document.getElementById('helpBoxFirstWorkout').style.display = 'none';
+            document.getElementById('helpArrowWorkout').style.display = 'none';
+            
+            
+            document.getElementById('createExerciseButton').style.display='flex';
+            
+            document.getElementById('addIcon2').style.display='none';
+
+        }
+        document.getElementById('createExercise').style.display = 'flex';
+        document.getElementById('addIcon2').style.display='none';
+        document.getElementById('mainContentExercises').style.display ='none';
+        document.getElementById('addExerciseOptionsDiv').style.display ='none';
+        document.getElementById('createExerciseButton').style.display='flex';
+            
+    }
+
+    function cancel(){
+        document.getElementById('createExercise').style.display = 'none';
+       
+        document.getElementById('mainContentExercises').style.display ='flex';
+        document.getElementById('addIcon2').style.display='flex';
+        document.getElementById('createExerciseButton').style.display='none';
+        
+    }
+
+    function goBack(){
+        console.log(document.getElementById('createExercise').style.display)
+
+        if (document.getElementById('createExercise').style.display == 'flex'){
+            cancel()
+        }
+        else{
+            window.location.href = "{{url_for('main')}}";    
+        }
+        
+    }
+
+    function createE(){
+        var form = document.getElementById('createExercise');
+        form.submit()
+    }
+
+
+
+    
+
+
+
+</script>
+
+</body>
+
+</html>

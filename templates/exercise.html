@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet"> 
+
+</head>
+
+<body>
+
+  
+  <div class= indexMain id = "countImage" style="background-image:url({{url_for('static', filename = 'thevald2.png')}})">
+
+    <div class='topBar' style="background-color: transparent;">
+
+   <div id = 'aboveNameMainE'></div>
+   
+           
+
+        <div id='backIcon' class='pullDown' onclick="goBackPrompt()" ></div>
+
+        <div id='pauseIcon' class='pullDown' onclick="pauseWorkout()" ></div>
+
+        <div id='unpauseIcon' class='pullDown' onclick="startTimer()" ></div>       
+
+    </div>
+
+
+
+    <div id = recordPromptDiv class="slideRight">
+      
+      <div class = 'PromptMainContent'>Are you sure you want to exit and record this exercise?</div>
+      <div class = 'PromptOptions' onclick= "cancel()">no</div>
+      <div class = 'PromptOptions' onclick="record()">yes</div>
+
+    </div>
+
+    <div id = cancelPromptDiv class="slideLeft">
+      
+      <div class = 'PromptMainContent'>Are you sure you want to exit this exercise?</div>
+      <div class = 'PromptOptions' onclick= "cancel2()">no</div>
+      <div class = 'PromptOptions' onclick="goBack()">yes</div>
+
+    </div>
+
+        
+    <div id="mainBoxGo" ></div>
+    
+    <div id="mainContentGo">
+
+      <div class="exerciseContent">
+
+        <div class = exerciseName>{{thisExercise.name}}</div>
+
+        <div class = setOutOf>
+
+          <p id = "setNumber"></p>
+
+        </div>
+
+        <div class = timer>
+
+          <p id="safeTimerDisplay"></p>
+
+        </div>
+
+        <div class = headline>
+
+          <p id ="headline" onclick="speedUp()"></p>
+
+        </div>
+
+        <!-- <div class="headline" onclick="speedUp()" id = speedupDiv>Speed up</div> -->
+
+      </div>
+
+    </div>
+
+    <div class='bottomBar' style="background-color: transparent;">
+    
+
+    
+    <div class="button-container-13" id = 'doneSave' >
+
+      <button id='work' onclick="recordPrompt()" type="button" name="Hover">Done | Save</button>
+                           
+    </div>
+
+
+
+    </div>
+
+  </div>
+
+
+  
+
+<script>
+
+  var sets = Number("{{thisExercise.sets}}");
+
+  var setsStatic = Number("{{thisExercise.sets}}");
+
+  var setCount = 1;
+
+  var paused = false;
+
+  var pauseButton = document.getElementById('pauseIcon');
+
+  var unpauseButton = document.getElementById('unpauseIcon');
+
+  var speed = 1000;
+
+  var spedUp = false;
+
+  var minRest = 0;
+   var secondsRest = 0;
+
+
+
+  var sec = Number("{{thisExercise.time_for_set}}");
+
+  var min = 0;
+
+  function cancel(){
+    if(paused){
+      startTimer();
+    }
+    document.getElementById('mainContentGo').style.display = 'flex';
+    document.getElementById('recordPromptDiv').style.display = 'none';
+  }
+
+  function cancel2(){
+    if(paused){
+      startTimer();
+    }
+    document.getElementById('mainContentGo').style.display = 'flex';
+    document.getElementById('cancelPromptDiv').style.display = 'none';
+  }
+
+  function recordPrompt(){
+  if(!paused){
+    pauseWorkout();
+    paused = true;
+  }
+  document.getElementById('mainContentGo').style.display = 'none';
+  document.getElementById('recordPromptDiv').style.display = 'flex';
+}
+
+function goBackPrompt(){
+  if(!paused){
+    pauseWorkout();
+    paused = true;
+  }
+  document.getElementById('mainContentGo').style.display = 'none';
+  document.getElementById('cancelPromptDiv').style.display = 'flex';
+}
+
+  beginnerTimer()
+
+  function beginnerTimer(){
+    
+    var sec = 5;    
+
+    document.getElementById('headline').innerHTML = "READY?";
+
+    var timer = setInterval(function(){
+        document.getElementById('safeTimerDisplay').innerHTML= sec;
+        sec--;
+        
+        if ( sec < 10 ){
+          document.getElementById('safeTimerDisplay').style.color = 'blue';
+        }        
+        if (sec < 0) {
+            document.getElementById('safeTimerDisplay').innerHTML='';
+            var go = new Audio("{{url_for('static',filename='go.wav')}}");
+            go.play()
+
+            clearInterval(timer);
+            check();
+        }
+        
+    }, speed);
+  }
+
+  function pauseWorkout(){
+
+    paused = true;
+
+    unpauseButton.style.display = 'block';
+
+    pauseButton.style.display = 'none';
+
+    
+
+    
+  }
+
+  function stopTimer(secs){
+    
+    sec = secs;
+   
+  }
+
+  function startTimer(){
+
+    unpauseButton.style.display = 'none';
+
+    pauseButton.style.display = 'block';
+
+    paused = false;
+
+
+    
+    timer(sec);
+  }
+
+  function speedUp(){
+    if (document.getElementById('headline').innerHTML == 'GO!'){
+      document.getElementById('headline').style.display = 'none';
+      speed = 100;
+      spedUp = true;
+    }
+    else{
+      return
+    }
+
+  
+}
+
+function speedUpRestartIt(){
+  spedUp = false;
+  timer(sec);
+}
+
+
+  function timer(sec){
+
+    if(spedUp == false){
+      document.getElementById('headline').style.display = 'block';  
+    }
+
+    pauseButton.style.display = 'block';
+
+    document.getElementById('headline').style.color = 'blue';
+    
+    document.getElementById('headline').innerHTML = "GO!";
+
+    var timer = setInterval(function(){
+
+      if (sec >= 60){
+        min = Math.floor(sec / 60);
+       
+        secondsDo = sec - (min * 60);
+       
+        if (secondsDo < 10){
+          document.getElementById('safeTimerDisplay').innerHTML=min + ':'+ '0' + secondsDo;
+        }
+        if (secondsDo >= 10){
+          document.getElementById('safeTimerDisplay').innerHTML=min + ':'+ secondsDo;
+        }
+        secondsDo--
+      }
+
+      if (sec < 60){
+        document.getElementById('safeTimerDisplay').innerHTML= sec;  
+      }
+        
+
+      if(paused){
+        clearInterval(timer);
+        stopTimer(sec);
+      }
+      if(spedUp){
+        clearInterval(timer);
+        speed = 10;
+        speedUpRestartIt();
+      }
+      if ( sec < 10 ){
+        document.getElementById('safeTimerDisplay').style.color = 'red';
+      }
+      if ( sec > 10 ){          
+        document.getElementById('safeTimerDisplay').style.color = 'black';
+      }
+      if (sec == 0 ) {
+          document.getElementById('safeTimerDisplay').innerHTML='0';
+          clearInterval(timer);
+          document.getElementById('headline').style.display = 'none';
+          speed = 1000;
+          spedUp = false;
+          beginRest();
+      }
+      sec--;
+    }, speed);
+  }
+
+  function beginRest(){
+
+    pauseButton.style.display = 'none';
+    stop = new Audio("{{url_for('static', filename = 'stop.wav')}}");
+    stop.play();
+    var minutes = Number("{{thisExercise.rest_between_minutes}}");
+    var sec = Number("{{thisExercise.rest_between_seconds}}");
+    var totalSeconds = (minutes * 60) + sec;
+    
+    var totalRest = (minutes * 60) + sec;    
+   
+    document.getElementById('headline').style.display = 'block';
+
+    document.getElementById('headline').style.color = 'black';
+
+    document.getElementById('headline').innerHTML = "REST!";
+
+    var timer = setInterval(function(){
+
+      if(totalRest >= 60){
+        minRest = Math.floor(totalRest / 60);
+      
+        secondsRest = totalRest - (minRest * 60);
+
+        if (secondsRest < 10){
+          document.getElementById('safeTimerDisplay').innerHTML=min + ':'+ '0' + secondsRest;
+        }
+        if (secondsRest >= 10){
+          document.getElementById('safeTimerDisplay').innerHTML=min + ':'+ secondsRest;
+        }
+        secondsRest--
+      }
+
+      if(totalRest < 60){
+        document.getElementById('safeTimerDisplay').innerHTML=totalRest;
+      }
+
+      if ( totalRest < 10 ){
+        if (totalRest == 9){
+          bells = new Audio("{{url_for('static', filename = 'bells.wav')}}");
+          bells.play();
+        }          
+        document.getElementById('safeTimerDisplay').style.color = 'red';
+      }
+      if ( totalRest > 10 ){
+        document.getElementById('safeTimerDisplay').style.color = 'black';
+      }
+      if (totalRest < 0) {
+        document.getElementById('safeTimerDisplay').innerHTML='';
+        clearInterval(timer);
+        var go = new Audio("{{url_for('static',filename='go.wav')}}");
+        go.play()
+        check();            
+      }
+      totalRest--;
+      sec --;
+    }, 1000);
+  }
+
+function check(){
+  
+  if (sets > 0){
+    sec = Number("{{thisExercise.time_for_set}}");
+    document.getElementById('setNumber').innerHTML = 'set: ' + String(setCount) + ' of ' + String(setsStatic);
+    setCount ++;
+    sets = sets - 1;
+    timer(sec);
+  }
+  else{
+    document.getElementById('headline').innerHTML = "Good Job!";
+    document.getElementById('doneButtonController').style.display = 'none';
+  }
+  
+}
+
+function createWorkout(){
+  window.location.href = "{{url_for('createWorkout')}}";
+}
+
+function goBack(){
+  window.location.href ="{{url_for(day, workout_id = thisWorkout.id)}}";
+}
+
+
+
+
+function record(){
+  
+  setsCompleted = (setCount - 1);
+  
+  if (setsCompleted == 0){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 0, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 1){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 1, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"  
+  }
+  if (setsCompleted ==2){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 2, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 3){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 3, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 4){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 4, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if(setsCompleted == 5){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 5, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 6){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 6, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 7){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 7, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"  
+  }
+  if (setsCompleted ==8){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 8, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 9){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 9, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 10){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 10, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if(setsCompleted == 11){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 11, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 12){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 12, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 13){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 13, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"  
+  }
+  if (setsCompleted ==14){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 14, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 15){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 15, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 16){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 16, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if(setsCompleted == 17){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 17, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 18){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 18, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 19){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 19, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"  
+  }
+  if (setsCompleted ==20){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 20, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 21){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 21, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 22){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 22, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if(setsCompleted == 23){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 23, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if (setsCompleted == 24){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 24, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+  if(setsCompleted == 25){
+    window.location.href = "{{url_for('record_Stats', w_id = thisWorkout.id, sets = 25, weight = thisExercise.weight, name = thisExercise.name, reps = thisExercise.reps, e_id = thisExercise.id)}}"
+  }
+}
+  
+</script>
+
+</body>
+</html>

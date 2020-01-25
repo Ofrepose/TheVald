@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>The Vald</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+</head>
+
+<body>
+<div class='topBar'>        
+
+        <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+
+        <div id='eyeIcon' class='pullDown' onclick="eyeSee()"  ></div>
+        <div id='eyeShutIcon' class='pullUp' onclick="eyeDont()"  ></div>
+
+        <div id = 'ws_nameMain'><div id = 'aboveNameMain'></div>
+        <div id = 'undernameMain'>{{thisWorkout.name}}</div>
+      </div>
+
+  </div>
+<!-- 
+  <div id = underBar>
+    
+    <div id='communityIcon' class='pullDown' onclick="openCommunity()" ></div>
+
+  </div> -->
+
+
+  <div class= indexMain id = "mainImage">
+
+
+
+    <div id="mainBox"></div>
+
+        <div id="mainContentWorkout">
+
+ 
+
+
+
+    <div id = 'mainSquaresBody' >
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+                                
+           
+
+           
+
+            <a href = "{{url_for('monday', workout_id = thisWorkout.id)}}">
+
+
+
+              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = 'zz9.jpg')}})"><div class = "dayText pullDown">Monday</div>
+
+                   <div class="eyeD pullUp">
+
+                    <div class=eyeTop id=l1><div class = eyeItemName>Name</div><div class = eyeItem>sets</div><div class = eyeItem>reps</div> </div>
+
+                     {% for a in all_exercises if a.day == 'monday' %}
+        
+        
+
+        
+        
+        <div class = eyeItemName>{{a.name}}</div><div class = eyeItem>{{a.sets}}</div><div class = eyeItem>{{a.reps}}</div>
+        
+
+        {% else %}
+          <div class=eyeTop id=t1><div class = eyeItemName>Rest Day</div></div>
+        
+        
+       {% endfor %}
+
+
+      </div>
+
+              </button>
+
+            </a>
+                           
+          </div>
+
+      </div>
+
+    </div>
+
+
+    <div id = 'mainSquaresBody' >
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+                                
+           
+
+           
+
+            <a href = "{{url_for('tuesday', workout_id = thisWorkout.id)}}">
+
+              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = 'zzzb6.jpg')}})"><div class = "dayText pullDown">Tuesday</div>
+
+
+                <div class="eyeD pullUp">
+
+                  <div class=eyeTop id=l2><div class = eyeItemName>Name</div><div class = eyeItem>sets</div><div class = eyeItem>reps</div> </div>
+        {% for a in all_exercises if a.day == 'tuesday' %}
+        
+        
+
+        
+        
+        <div class = eyeItemName>{{a.name}}</div><div class = eyeItem>{{a.sets}}</div><div class = eyeItem>{{a.reps}}</div>
+        
+
+        {% else %}
+
+          <div class=eyeTop id=t2><div class = eyeItemName>Rest Day</div></div>
+        
+        {{return}}
+       {% endfor %}
+
+      </div>
+
+
+
+
+              </button>
+
+            </a>
+                           
+          </div>
+
+      </div>
+
+    </div>
+
+
+    <div id = 'mainSquaresBody' >
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+                                
+           
+
+           
+
+            <a href = "{{url_for('wednesday', workout_id = thisWorkout.id)}}">
+
+              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = 'z11.jpg')}})"><div class = "dayText pullDown">Wednesday</div>
+
+                <div class="eyeD pullUp">
+
+                  <div class=eyeTop id=l3><div class = eyeItemName>Name</div><div class = eyeItem>sets</div><div class = eyeItem>reps</div> </div>
+                   {% for a in all_exercises if a.day == 'wednesday' %}
+        
+        
+
+        
+        
+        <div class = eyeItemName>{{a.name}}</div><div class = eyeItem>{{a.sets}}</div><div class = eyeItem>{{a.reps}}</div>
+        
+
+        {% else %}
+          <div class=eyeTop id=t3><div class = eyeItemName>Rest Day</div></div>
+        
+        {{return}}
+       {% endfor %}
+
+
+      </div>
+
+
+              </button>
+
+            </a>
+                           
+          </div>
+
+      </div>
+
+    </div>
+
+
+    <div id = 'mainSquaresBody' >
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+                                
+           
+
+           
+
+            <a href = "{{url_for('thursday', workout_id = thisWorkout.id)}}">
+
+              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = 'z2.jpg')}})"><div class = "dayText pullDown">Thursday</div>
+
+                <div class="eyeD pullUp">
+
+                  <div class=eyeTop id=l4><div class = eyeItemName>Name</div><div class = eyeItem>sets</div><div class = eyeItem>reps</div> </div>
+          {% for a in all_exercises if a.day == 'thursday' %}
+        
+        
+
+        
+        
+        <div class = eyeItemName>{{a.name}}</div><div class = eyeItem>{{a.sets}}</div><div class = eyeItem>{{a.reps}}</div>
+        
+
+        {% else %}
+          <div class=eyeTop id=t4><div class = eyeItemName>Rest Day</div></div>
+        
+        {{return}}
+       {% endfor %}
+
+
+      </div>
+
+
+
+              </button>
+
+            </a>
+                           
+          </div>
+
+      </div>
+
+    </div>
+
+
+    <div id = 'mainSquaresBody' >
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+                                
+           
+
+           
+
+            <a href = "{{url_for('friday', workout_id = thisWorkout.id)}}">
+
+              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = 'z18.jpg')}})"><div class = "dayText pullDown">Friday</div>
+
+
+                <div class="eyeD pullUp">
+
+                  <div class=eyeTop id=l5><div class = eyeItemName>Name</div><div class = eyeItem>sets</div><div class = eyeItem>reps</div> </div>
+         {% for a in all_exercises if a.day == 'friday' %}
+        
+        
+
+        
+        
+        <div class = eyeItemName>{{a.name}}</div><div class = eyeItem>{{a.sets}}</div><div class = eyeItem>{{a.reps}}</div>
+        
+
+        {% else %}
+          <div class=eyeTop id=t5><div class = eyeItemName>Rest Day</div></div>
+        
+        {{return}}
+       {% endfor %}
+
+
+      </div>
+
+
+              </button>
+
+            </a>
+                           
+          </div>
+
+      </div>
+
+    </div>
+
+
+    <div id = 'mainSquaresBody' >
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+                                
+           
+
+           
+
+            <a href = "{{url_for('saturday', workout_id = thisWorkout.id)}}">
+
+              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = 'zz19.jpg')}})"><div class = "dayText pullDown">Saturday</div>
+
+
+                <div class="eyeD pullUp">
+
+                  <div class=eyeTop id=l6><div class = eyeItemName>Name</div><div class = eyeItem>sets</div><div class = eyeItem>reps</div> </div>
+         {% for a in all_exercises if a.day == 'saturday' %}
+        
+        
+
+        
+        
+        <div class = eyeItemName>{{a.name}}</div><div class = eyeItem>{{a.sets}}</div><div class = eyeItem>{{a.reps}}</div>
+        
+
+        {% else %}
+          <div class=eyeTop id=t6><div class = eyeItemName>Rest Day</div></div>
+        
+        {{return}}
+       {% endfor %}
+
+
+      </div>
+
+
+              </button>
+
+            </a>
+                           
+          </div>
+
+      </div>
+
+    </div>
+
+
+    <div id = 'mainSquaresBody' >
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+                                
+           
+
+           
+
+            <a href = "{{url_for('sunday', workout_id = thisWorkout.id)}}">
+
+              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = 'z12.jpg')}})"><div class = "dayText pullDown">Sunday</div>
+
+
+                <div class="eyeD pullUp">
+
+                  <div class=eyeTop id=l7><div class = eyeItemName>Name</div><div class = eyeItem>sets</div><div class = eyeItem>reps</div> </div>
+         {% for a in all_exercises if a.day == 'sunday' %}
+        
+        
+
+        
+        
+        <div class = eyeItemName>{{a.name}}</div><div class = eyeItem>{{a.sets}}</div><div class = eyeItem>{{a.reps}}</div>
+        
+
+        {% else %}
+          <div class=eyeTop id=t7><div class = eyeItemName>Rest Day</div></div>
+        
+        {{return}}
+       {% endfor %}
+
+
+      </div>
+
+
+              </button>
+
+            </a>
+                           
+          </div>
+
+      </div>
+
+    </div>
+
+
+
+
+
+  <br>
+
+
+
+  
+
+
+
+
+   
+  
+</div>
+
+
+
+
+ 
+
+  </div>
+
+
+
+
+
+
+
+    <div id = 'loadingDiv'><div id = loadingText class="pullDown">loading...</div><div class="lds-ripple"><div></div><div></div></div></div>
+
+
+<script>
+
+  if (document.getElementById('t1') != null){
+    document.getElementById('l1').style.display= 'none';
+  }
+  if (document.getElementById('t2') != null){
+    document.getElementById('l2').style.display= 'none';
+  }
+  if (document.getElementById('t3') != null){
+    document.getElementById('l3').style.display= 'none';
+  }
+  if (document.getElementById('t4') != null){
+    document.getElementById('l4').style.display= 'none';
+  }
+  if (document.getElementById('t5') != null){
+    document.getElementById('l5').style.display= 'none';
+  }
+  if (document.getElementById('t6') != null){
+    document.getElementById('l6').style.display= 'none';
+  }
+  if (document.getElementById('t7') != null){
+    document.getElementById('l7').style.display= 'none';
+  }
+
+  function eyeSee(){
+    var dayDivs = document.getElementsByClassName('dayText');
+    var eyeDivs = document.getElementsByClassName('eyeD pullUp');
+    for (var i = 0; i < dayDivs.length; i++){
+      dayDivs[i].style.display = 'none';
+      eyeDivs[i].style.display = 'flex';
+      eyeDivs[i].style.visibility = 'visible';
+    }
+    document.getElementById('eyeIcon').style.display = 'none';
+    document.getElementById('eyeShutIcon').style.display = 'flex';
+  }
+
+  function eyeDont(){
+    var dayDivs = document.getElementsByClassName('dayText');
+    var eyeDivs = document.getElementsByClassName('eyeD pullUp');
+    for (var i = 0; i < dayDivs.length; i++){
+      dayDivs[i].style.display = 'block';
+      eyeDivs[i].style.display = 'none';
+      eyeDivs[i].style.visibility = 'hidden';
+    }
+    document.getElementById('eyeIcon').style.display = 'flex';
+    document.getElementById('eyeShutIcon').style.display = 'none';
+  }
+
+  function goBack(){
+    document.getElementById('loadingDiv').style.display = 'flex';
+        
+    window.location.href = "{{url_for('main')}}";   
+                
+  }
+
+
+</script>
+
+</body>
+</html>

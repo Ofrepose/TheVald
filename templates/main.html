@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+  <link rel="preload" href="{{ url_for('static', filename='defaultSmall.css') }}" as="style">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+</head>
+
+<body>
+<div class='topBar'>
+
+  <div id='logoffIcon' class='pullDown' onclick="logoutAsk()" ></div>
+  <div id='addIcon2' class='pullDown' onclick="createWorkout()" ></div>
+
+  <!-- <div id='statsIcon' class='pullDown' onclick="openStats()" ></div> -->
+  <div id = 'ws_nameMain'><div id = 'aboveNameMain'></div>
+        <div id = 'undernameMain'>{{user.name_first}} {{user.name_last}}</div>
+      </div>
+  <!-- <div id='accountIcon' class='pullDown' onclick="openAccount()" ></div> -->
+  <!-- <div id='logoffIcon' class='pullDown' onclick="logoutAsk()" ></div> -->
+
+  </div>
+<!-- 
+  <div id = underBar>
+    
+    <div id='communityIcon' class='pullDown' onclick="openCommunity()" ></div>
+
+  </div> -->
+
+
+  <div id = 'accountMainDiv' >
+
+      <div class = 'accountSquareMain pullDown' id = accountHidden>
+
+        <div class="accountTopBarItem">
+        
+        <div id='logoffIcon' class='pullDown' onclick="logoutAsk()" ></div>
+        <div id = 'accountTitle'>Account Info</div> 
+        <div id='closeIcon' class='pullDown' onclick="closeAccount()" ></div>
+
+        <a href="{{url_for('community')}}" style="width: 100%;"> <div class = 'accountItem'>Community</div> </a>
+    
+        <a href="{{url_for('community')}}" style="width: 100%;"> <div class = 'accountItem'>Food Journal</div> </a>
+
+        <a href="{{url_for('community')}}" style="width: 100%;"> <div class = 'accountItem'>Info</div> </a>
+
+                                
+        </div>
+           
+
+
+         
+                           
+        
+
+      </div>
+
+    </div>
+
+
+  <div class= indexMain id = "mainImage">
+
+
+
+    <div id="mainBox"></div>
+
+        <div id="mainContent">
+
+ 
+  {% for w in range ( 0, users_workouts|length) %}
+  <div id = 'mainSquaresBodyMain' class =pullDown>
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+
+          {% if users_workouts[w].original_owner == user.id and users_workouts[w].uploaded == False %}
+                                
+           <a href="{{url_for('upload_workout', workout_id = users_workouts[w].id)}}"><div id='uploadIcon' class='pullDown' ></div></a>
+
+           {% endif %}
+
+           <a href="{{url_for('del_Workout_Confirm', workout_id = users_workouts[w].id)}}"> <div id='deleteButtonIcon' class='pullDown' onclick="loading()" ></div></a>
+
+            <a href = "{{url_for('workout', id = users_workouts[w].id)}}">
+
+              <button id='mainSquareButtonMain' type="button" name="Hover" style="background-image:url({{url_for('static', filename = images[w])}})">{{users_workouts[w].name.capitalize()}}</button>
+
+            </a>
+                           
+          </div>
+
+      </div>
+
+    </div>
+
+  {% endfor %}
+  <div id =fillerBar></div>
+
+  <br>
+
+
+
+  
+
+
+
+
+   
+  
+</div>
+
+{% if users_workouts|length < 1 %}
+  <div id = 'helpBoxFirstMain' class="pullDown">
+    
+    <div id = 'helpBoxFirstInside'>To get started create your first workout routine by clicking the + Button in the top right!<br><br><br>Or Check out some free workouts offered in our Community section below!</div>
+
+  </div>
+
+  <div id='helpArrowMain'></div>
+{% endif %}
+
+
+ 
+
+  </div>
+
+
+
+
+
+ <div id = 'loadingDiv'><div id = loadingText class="pullDown">loading...</div><div class="lds-ripple"><div></div><div></div></div></div>
+
+ <div class = 'bottomBarNew'>
+   
+   <div id = 'homeContainer' ><div id = 'homeButton'></div><div id = 'homeOnButton'></div></div>
+
+   <div id = 'communityContainer' onclick="community()"><div id = 'communityButton'></div><div id = 'communityOnButton'></div></div>
+
+    <div id = 'graphContainer' onclick="graphs()"><div id = 'graphButton'></div><div id = 'graphOnButton'></div></div>
+
+
+ </div>
+
+
+
+
+
+
+
+<script>
+
+  function community(){
+
+    window.location.href="{{url_for('community')}}";
+
+    // document.getElementById('homeOnButton').style.display = 'none';
+    // document.getElementById('homeButton').style.display = 'flex';
+    // document.getElementById('communityOnButton').style.display = 'flex';
+    // document.getElementById('communityButton').style.display = 'none';
+    // document.getElementById('graphOnButton').style.display = 'none';
+    // document.getElementById('graphButton').style.display = 'flex';
+  }
+
+  function home(){
+    document.getElementById('homeOnButton').style.display = 'flex';
+    document.getElementById('homeButton').style.display = 'none';
+    document.getElementById('communityOnButton').style.display = 'none';
+    document.getElementById('communityButton').style.display = 'flex';
+    document.getElementById('graphOnButton').style.display = 'none';
+    document.getElementById('graphButton').style.display = 'flex';
+  }
+
+  function graphs(){
+    window.location.href = "{{url_for('user_stats')}}";
+    document.getElementById('homeOnButton').style.display = 'none';
+    document.getElementById('homeButton').style.display = 'flex';
+    document.getElementById('communityOnButton').style.display = 'none';
+    document.getElementById('communityButton').style.display = 'flex';
+    document.getElementById('graphOnButton').style.display = 'flex';
+    document.getElementById('graphButton').style.display = 'none';
+  }
+
+
+
+  function createWorkout(){
+    window.location.href = "{{url_for('createWorkout')}}";
+  }
+
+  function openStats(){
+    window.location.href = "{{url_for('user_stats')}}";
+  }
+
+  function logoutAsk(){
+    window.location.href="{{url_for('logout')}}";
+  }
+
+  function openCommunity(){
+    // open Community page
+  }
+
+  function uploadWorkout(){
+    console.log("upload");
+    // opens page letting you describe the workout and then upload for community use
+  }
+
+  function openAccount(){
+    console.log('open account');
+    document.getElementById('accountMainDiv').style.display = 'flex';
+    document.getElementById('accountHidden').style.visibility = 'visible';
+  }
+
+  function closeAccount(){
+    document.getElementById('accountHidden').style.visibility = 'hidden';
+    document.getElementById('accountMainDiv').style.display = 'none';
+    
+  }
+
+  function loading(){
+    document.getElementById('loadingDiv').style.display = 'flex';
+  }
+
+
+</script>
+
+</body>
+</html>

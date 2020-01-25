@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+	<script src="{{ url_for('static', filename='Chart.min.js') }}"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+  <div class='topBar'>
+
+  <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+  <div id='topBarTitle'>Stats</div>
+  
+
+</div>
+
+	<div class = 'statsMain'>
+
+		
+
+		<div id = 'statsOptions'>
+
+			<div class = 'statsSquareMain' onclick="showDates()">					
+
+				<div class="button-container-13" id = 'showDates'>
+                                
+    				<button id='showDatesButton' type="button" name="Hover">Show Dates</button>
+                           
+  				</div>				
+
+			</div>
+
+			<div class = 'statsSquareMain' onclick="showNames()">					
+
+				<div class="button-container-13" id = 'showNames'>                                
+    			
+
+    				<button id='showNamesButton' type="button" name="Hover" >Show Names</button>
+                           
+  				</div>				
+
+			</div>
+
+		</div>
+
+		<div id = 'byDate'>
+
+			{% if dates|length < 1 %}
+
+  				<div id = 'helpBoxFirst'>
+    
+    				<div id = 'helpBoxFirstInside'>Whenever you Finish an Exercise click 'Done|Record' to record your stats! You can find all of your
+    				workouts by date here!</div>
+
+  				</div>
+  				
+
+			{% endif %}
+
+      <div class="statsMainContainer">
+
+			{% for d in dates %}
+
+      
+
+				<div class = 'statsSquare'>
+
+					<a  style=' display:flex; flex-wrap:wrap; width: 100%; height: 30px;' href = "{{url_for('user_stats_date', stat_id = d)}}">
+
+						<div class = 'statsInside'>
+
+							{{d}}
+
+						</div>
+
+					</a>
+
+				</div>
+
+     
+
+		{% endfor %}
+
+     </div>
+
+		</div>
+
+		<div id = 'byName'>
+
+			{% if names|length < 1 %}
+
+  				<div id = 'helpBoxFirst'>
+    
+    				<div id = 'helpBoxFirstInside'>Whenever you Finish an Exercise click 'Done|Record' to record your stats! You can find all of your
+    				workouts by name here!</div>
+
+  				</div>
+  				
+
+			{% endif %}
+
+			{% for n in names|sort %}
+
+				<div class = 'statsSquare'>
+
+					<a  style=' display:flex; flex-wrap:wrap; width: 100%; height: 30px;' href = "{{url_for('user_stats_name', name = n)}}">
+
+						<div class = 'statsInside'>
+
+  						{{n}}
+
+  						</div>
+
+  					</a>
+
+  				</div>
+
+			{% endfor %}
+
+		</div>
+
+  	</div>
+
+ <div class = 'bottomBarNew'>
+   
+   <div id = 'homeContainer' onclick="home()"><div id = 'homeButton'></div><div id = 'homeOnButton'></div></div>
+
+   <div id = 'communityContainer' onclick="community()"><div id = 'communityButton'></div><div id = 'communityOnButton'></div></div>
+
+    <div id = 'graphContainer' onclick="graphs()"><div id = 'graphButton'></div><div id = 'graphOnButton'></div></div>
+
+
+ </div>
+
+
+
+  	<script>
+
+      document.getElementById('homeOnButton').style.display = 'none';
+    document.getElementById('homeButton').style.display = 'flex';
+    document.getElementById('communityOnButton').style.display = 'none';
+    document.getElementById('communityButton').style.display = 'flex';
+    document.getElementById('graphOnButton').style.display = 'flex';
+    document.getElementById('graphButton').style.display = 'none';
+
+  		document.getElementById('byDate').style.display = 'none';
+
+  		document.getElementById('byName').style.display = 'none';
+
+      function community(){
+        window.location.href="{{url_for('community')}}";
+      }
+
+      function home(){
+        window.location.href = "{{url_for('main')}}";
+      }
+  		
+  		function showDates(){
+
+  			document.getElementById('statsOptions').style.display = 'none';
+
+  			document.getElementById('byDate').style.display = 'block';
+
+  		}
+
+  		function showNames(){
+
+  			document.getElementById('statsOptions').style.display = 'none';
+
+  			document.getElementById('byName').style.display = "block";
+  		}
+
+  		function goBack(){
+  			if(document.getElementById('byDate').style.display != 'none'){
+
+  				document.getElementById('byDate').style.display = 'none';
+
+  				document.getElementById('statsOptions').style.display = 'flex';
+
+  			}
+
+  			else if (document.getElementById('byName').style.display != 'none'){
+
+  				document.getElementById('byName').style.display = 'none';
+
+  				document.getElementById('statsOptions').style.display = 'flex';
+
+  			}
+  			else{
+
+  				window.location.href = "{{url_for('main')}}";
+
+  			}
+  		}
+
+  	</script>
+
+
+
+
+
+</body>
+</html>

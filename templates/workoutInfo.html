@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+  <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+</head>
+
+<body>
+<div class='topBar'>
+
+  
+  <div id = 'ws_nameMain'><div id = 'aboveNameMain'></div>
+        <div id = 'undernameMain'></div>
+      </div>
+  <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+
+
+  </div>
+
+
+  <div id = 'accountMainDiv' >
+
+      <div class = 'accountSquareMain pullDown' id = accountHidden>
+
+        <div class="accountTopBarItem">
+        
+        <div id='logoffIcon' class='pullDown' onclick="logoutAsk()" ></div>
+        <div id = 'accountTitle'>Account Info</div> 
+        <div id='closeIcon' class='pullDown' onclick="closeAccount()" ></div>
+
+                                
+        </div>
+           
+
+
+         
+                           
+        
+
+      </div>
+
+    </div>
+
+
+  <div class= indexMain id = "mainImage">
+
+
+
+    <div id="mainBox"></div>
+
+        <div id="mainContent">
+          
+          
+  <div id = 'mainSquaresBodyInfo' class =pullDown>
+
+      <div class = 'mainSquareMain'>
+        
+        <div class="button-container-13" id = 'showDates'>
+
+           {% if this_user.id != workout.original_owner %}
+                                
+           <a href="{{url_for('download_workout', workout_id = workout.id)}}"><div id='downloadIcon' class='pullDown' onclick="downloadNow()" ></div></a> 
+
+           {% endif %}  
+
+              <button id='mainSquareButtonInfo' type="button" name="Hover" style="background-image:url({{url_for('static', filename = image)}})">{{workout.name.capitalize()}}<div id =infoCreatedBy>Created by: {{original_owner.name_first}}</div></button>
+   
+          </div>
+
+      </div>
+
+      <div id = infoDescription>{{workout.description}}</div>
+      <div class=eD>
+        
+        <div class=eTop>
+          <div class='e100W'>workouts will automatically populate on days according to this routines schedule</div>
+          <div class = eItemName style="text-decoration: underline;">Name</div><div class = eItem style="text-decoration: underline;">sets</div><div class = eItem style="text-decoration: underline;">reps</div> </div>
+
+        {% for a in all_e %}
+        <div class = eItemName style="text-decoration: none !important;">{{a.name}}</div><div class = eItem>{{a.sets}}</div><div class = eItem>{{a.reps}}</div>
+       {% endfor %}
+
+      </div>
+
+
+      <div class='e100W' style="margin-top: 10px; font-size: 15px;"> This workout has {{rest_days}} rest days</div>
+
+
+       <div class=eD>
+        
+        <div class=eTop ><div class = efocus style="text-decoration: underline;">This Workout focuses on:</div> </div>
+
+        {% if workout.full_body != True and workout.upper_body != True and workout.lower_body != True %}
+        <div class = efocus>No body focus was given for this workout</div>
+        {% endif %}
+
+        {% if workout.full_body == True %}
+        <div class = efocus>Full Body</div>
+        {% endif %}
+
+        {% if workout.upper_body == True %}
+        <div class = efocus>Upper Body</div>
+        {% endif %}
+
+        {% if workout.lower_body == True %}
+        <div class = efocus>Lower Body</div>
+        {% endif %}
+      
+
+      </div>
+
+        {% if this_user.id != workout.original_owner %}
+
+                                
+           <a href="{{url_for('download_workout', workout_id = workout.id)}}" style="width: 100%; margin: 20px auto;"><div class=e100w class='pullDown' style="color: skyblue;" onclick="downloadNow()">Download Workout</div></a> 
+
+            {% endif %}
+       
+
+       {% if this_user.id == workout.original_owner %}
+
+
+       <div class=e100w class='pullDown' style="color: skyblue; width: 100%; margin: 20px auto;">This is your workout</div>
+
+
+                  {% endif %}
+
+
+
+    </div>
+
+
+
+
+        </div>
+
+
+
+ 
+
+  </div>
+
+  <div id = 'downloadingDiv'"><div id = loadingText class="pullDown">Downloading Workout...</div><div class="lds-roller pullDown"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+
+
+<script>
+
+  function goBack(){
+      window.location.href = "{{url_for('community')}}"; 
+    }
+  function downloadNow(){
+    document.getElementById('downloadingDiv').style.display = 'flex';
+  }
+
+</script>
+
+</body>
+</html>

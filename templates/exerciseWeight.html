@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>The Vald</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+
+  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class='topBar'>
+
+  
+  <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+
+   <div class="button-container-13" id = 'beginExercise' >
+                                
+                   
+
+                    <button id='work' type="button" name="Hover" onclick="beginExercise()">Begin Exercise</button>
+                           
+                </div>
+
+  <div class="button-container-13" id = 'skip'>                            
+                  
+
+                    <button id='work2' type="button" name="Hover" onclick="skipConfirm()">Skip</button>
+                           
+                </div>
+
+</div>
+
+
+    <div class= indexMain id = "mainImage">
+
+        <div id="mainBox" ></div>
+
+        <div id="mainContentExercises" >
+
+            
+    
+            <form id='mobileForm' method = "POST" action = "{{url_for('beginWorkout_weight', workout_id = thisWorkout.id, exercise_id = thisExercise.id)}}" enctype="multipart/form-data">
+
+                <input id = 'weightInput' type = number placeholder="Enter Weight" name = 'weight' required focus style="margin: auto; height: 100px;text-align: center; " onkeyup="changed()" value="" />
+
+                
+
+            </form>
+
+            <div id = weightSkipDia class="slideLeft">
+      
+                <div class = 'PromptMainContent'>Are you sure you want to skip weight?</div>
+                <div class = 'PromptOptions' onclick= "skipCancel()">no</div>
+                <div class = 'PromptOptions' onclick="skip()">yes</div>
+
+            </div> 
+
+
+    
+        </div>
+
+    
+
+    </div>
+
+    <div class='bottomBar'>
+    
+   
+
+    
+
+</div>
+
+<script>
+    document.getElementById('beginExercise').style.display = 'none';
+
+
+    function changed(){
+        if (document.forms['mobileForm'].weight.value != ""){
+            document.getElementById('skip').style.display = 'none';
+            
+            document.getElementById('beginExercise').style.display = 'flex';
+
+        }
+        else{
+            document.getElementById('skip').style.display = 'flex';   
+            document.getElementById('beginExercise').style.display = 'none';
+        }
+    }
+    
+
+    function cancel(){
+        document.getElementById('createExercise').style.display = 'none';
+        document.getElementById('addNew').style.display = 'block';
+        document.getElementById('mainContentExercises').style.display ='flex';
+    }
+
+    function beginExercise(){
+        form = document.getElementById('mobileForm');
+        x = document.getElementById('weightInput').value;
+        if ((x%1) != 0 || x == ''){
+            alert("Please input your weight as a number");
+            return false;
+        }
+        else{           
+            form.submit();
+        }
+        
+    }
+
+  
+    function skipConfirm(){
+        document.getElementById('weightSkipDia').style.display = 'flex';
+        document.getElementById('mobileForm').style.display = 'none';
+    }
+
+    function skipCancel(){
+        document.getElementById('weightSkipDia').style.display = 'none';
+        document.getElementById('mobileForm').style.display = 'flex';
+    }
+
+
+
+    function skip(){
+        window.location.href = "{{url_for('beginWorkout', workout_id = thisWorkout.id, exercise_id = thisExercise.id)}}";
+    }
+
+    function goBack(){
+  window.location.href ="{{url_for(thisExercise.day, workout_id = thisWorkout.id)}}";
+}
+
+
+</script>
+
+</body>
+</html>
