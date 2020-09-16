@@ -1,75 +1,32 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<title>The Vald</title>
-
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
-
-  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-
-    <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
-
-</head>
-
-<body>
-
-
-    <div class= indexMain id = "mainImage">
-
-        <div id="mainBox" ></div>
-
-        <div id="mainContentExercises" >
-
-            <div class="titleHead" style="margin: 10px auto;">{{w_id.name.capitalize()}}</div>
-
-            
-                <div class='deleteConfirmDiv'>
-
-                    <div id = 'deleteConfirmPrompt'>
-                        
-                        Are you sure you would like to delete this workout?<br>
-                        All exercises within this workout will be deleted!
-
-                    </div>
-    	
-    	   
-
-    	                  
-
-                           <div class="button-container-13" id = addNew>
-                                <a  href = "{{url_for('del_Workout', workout_id = w_id.id)}}">
-                                    
-                                    <button type="button" name="Hover">Delete</button>
-                                </a>
-                            </div>
-
-                        
-    	
-                     
-
-                            <div class="button-container-13" id = back>
-                                
-                                
-                                <button id='' type="button" name="Hover" onclick="goBack()">Cancel</button>
-                           
-                        </div>
-    	       
-
-    	         
-
-                   
-
-                </div>
-
-           
-
-           
-    </div>
+   <head>
+      <title>The Vald</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+      <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+   </head>
+   <body>
+      <div class= indexMain id = "mainImage">
+      <div id="mainBox" ></div>
+      <div id="mainContentExercises" >
+         <div class="titleHead" style="margin: 10px auto;">{{w_id.name.capitalize()}}</div>
+         <div class='deleteConfirmDiv'>
+            <div id = 'deleteConfirmPrompt'>
+               Are you sure you would like to delete this workout?<br>
+               All exercises within this workout will be deleted!
+            </div>
+            <div class="button-container-13" id = addNew>
+               <a  href = "{{url_for('del_Workout', workout_id = w_id.id)}}">
+               <button type="button" name="Hover">Delete</button>
+               </a>
+            </div>
+            <div class="button-container-13" id = back>
+               <button id='' type="button" name="Hover" onclick="goBack()">Cancel</button>
+            </div>
+         </div>
+      </div>
 
 <script>
     
