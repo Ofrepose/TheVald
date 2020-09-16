@@ -1,534 +1,285 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<title>The Vald</title>
-
-    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
-
-    <link rel="preload" href="{{ url_for('static', filename='defaultSmall.css') }}" as="style">
-
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
-
-  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-
-    <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
-
-    <div id="loadOverlay" style="background-color:black; position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:2000;"></div>
-
-
-</head>
-
-<body>
-
-
-
-    <div id="dtMain">
-
-        <div class= 'dtTopBar'>
-            
+   <head>
+      <title>The Vald</title>
+      <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+      <link rel="preload" href="{{ url_for('static', filename='defaultSmall.css') }}" as="style">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+      <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+      <div id="loadOverlay" style="background-color:black; position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:2000;"></div>
+   </head>
+   <body>
+      <div id="dtMain">
+         <div class= 'dtTopBar'>
             <div class='dtPusher'></div>
             <div class='dtTopBarItem' id="signInDT">login</div>
-            
-            
-
-
-        </div>
-        
-        <div id = 'dtTop'>
-            
-        <div class="largeTitleText"><div id="titleImage"></div></div>
-        <div id="smallTitleUnder">the workout app for people who workout</div>
-
-        <div id="signInBox2">
-
-            <div id ='dumbOlX' onclick="closeOptions()">x</div>
-
-            
-
-            <div id="signInForm2">
-
-                <form method="POST" action="{{url_for('showLogin')}}" enctype="multipart/form-data" id='signIn_Form2'>
-                    <div class="signInFormText">Email:</div>
-
-                    <input type = email name = "email" style="color: #fff;" placeholder="Email" required /><br>
-
-                    <div class="signInFormText">Password:</div>
-
-                    <input type = password name = "p" style="color: #fff;" placeholder="Password" required /> <br>
-
-                    <div class='forgot_pw' style="width: 100%; color: #fff; margin:15px auto;" onclick="forgotPW()">Forgot your password?</div>             
-
-                    <div class="button-container-13"  style="color: #fff;" id = 'loginButton' style="width: 80%;">
-
+         </div>
+         <div id = 'dtTop'>
+            <div class="largeTitleText">
+               <div id="titleImage"></div>
+            </div>
+            <div id="smallTitleUnder">the workout app for people who workout</div>
+            <div id="signInBox2">
+               <div id ='dumbOlX' onclick="closeOptions()">x</div>
+               <div id="signInForm2">
+                  <form method="POST" action="{{url_for('showLogin')}}" enctype="multipart/form-data" id='signIn_Form2'>
+                     <div class="signInFormText">Email:</div>
+                     <input type = email name = "email" style="color: #fff;" placeholder="Email" required /><br>
+                     <div class="signInFormText">Password:</div>
+                     <input type = password name = "p" style="color: #fff;" placeholder="Password" required /> <br>
+                     <div class='forgot_pw' style="width: 100%; color: #fff; margin:15px auto;" onclick="forgotPW()">Forgot your password?</div>
+                     <div class="button-container-13"  style="color: #fff;" id = 'loginButton' style="width: 80%;">
                         <button id='work4' type="button" style="color: #fff;" name="Hover">Login</button>
-                           
-                    </div>
-
-                </form>
-
-            </div>
-
-            <div id="forgotForm">
-
-                <form method="POST" action="{{url_for('forgotPW')}}" enctype="multipart/form-data" id='forgot_Form'>
-
-                    <input type = email name = "email" placeholder="Email" focus required /><br>         
-
-                    <div class="button-container-2" id = 'forgotButton' style="width: 80%;">
-                                
+                     </div>
+                  </form>
+               </div>
+               <div id="forgotForm">
+                  <form method="POST" action="{{url_for('forgotPW')}}" enctype="multipart/form-data" id='forgot_Form'>
+                     <input type = email name = "email" placeholder="Email" focus required /><br>         
+                     <div class="button-container-2" id = 'forgotButton' style="width: 80%;">
                         <span class="mas" >Recover</span>
-
                         <button id='work3' type="button" name="Hover">Continue</button>
-                           
-                    </div>
-
-                </form>
-
+                     </div>
+                  </form>
+               </div>
             </div>
-
-            
-
-        </div>
-
-
-
-
-    </div>
-        
-
-    </div>
-
-    <div id="dtMain3Top">
-            
-            <div id="dtMain3ContentBox">
-                
-                <div class="dtMain3Content">Track your progress and watch your gains</div>
-
-            </div>
-
-        </div>
-
-    <div id="dtMain2">
-
-        <div id="dtMain2Right">
-
-
-
+         </div>
+      </div>
+      <div id="dtMain3Top">
+         <div id="dtMain3ContentBox">
+            <div class="dtMain3Content">Track your progress and watch your gains</div>
+         </div>
+      </div>
+      <div id="dtMain2">
+         <div id="dtMain2Right">
             <div id="dtMain2Left">
-
-                <div id="dtMain2LeftCon">Create your own or add workouts made by the Community!</div>
-                <div id="dtMain2LeftConUnder">Find the perfect workout tailored for your body type</div>
-                <div id="buttonSignUp">
-                    
-                    <div id="buttonSignUpText">Sign Up</div>
-
-                </div>
-
+               <div id="dtMain2LeftCon">Create your own or add workouts made by the Community!</div>
+               <div id="dtMain2LeftConUnder">Find the perfect workout tailored for your body type</div>
+               <div id="buttonSignUp">
+                  <div id="buttonSignUpText">Sign Up</div>
+               </div>
             </div>
-
             <div id = 'signUpBox2'>
-
-            
-            
-            <div id = 'signUpForm'>
-
-               <!--  <div id ='dumbOlX22'>x</div> -->
-                
-                <form method="POST" action="{{url_for('createAccount')}}" enctype="multipart/form-data" id='signUp_Form'>
-
+               <div id = 'signUpForm'>
+                  <!--  <div id ='dumbOlX22'>x</div> -->
+                  <form method="POST" action="{{url_for('createAccount')}}" enctype="multipart/form-data" id='signUp_Form'>
                      <div class="signInFormText">First Name:</div>
-
-                    <input type = text name = "name_first" style="margin-bottom: 10px; text-align: left;" placeholder="" focus required /><br>
-
-                    <div class="signInFormText">Last Name:</div>
-
-                    <input type = text name = "name_last" style="margin-bottom: 10px; text-align: left;" placeholder=""  required /><br>
-
-                    <div class="signInFormText">Email:</div>
-
-                    <input type = email name = "email" style=" margin-bottom: 10px; text-align: left;" placeholder=""  required /><br>
-
-                    <div class="signInFormText">Password:</div>
-
-                    <input type = password name = "p"  style="margin-bottom: 10px; text-align: left;" placeholder="" required /> <br>
-
-                    <div class="signInFormText">Confirm Password:</div>
-
-                    <input type = password name = "p2" style=" margin-bottom: 10px; text-align: left;" placeholder=" " required /> <br>
-
-                    <div class="button-container-13" id = 'loginButton' style="width: 80%;">
-                                
-                       
-
+                     <input type = text name = "name_first" style="margin-bottom: 10px; text-align: left;" placeholder="" focus required /><br>
+                     <div class="signInFormText">Last Name:</div>
+                     <input type = text name = "name_last" style="margin-bottom: 10px; text-align: left;" placeholder=""  required /><br>
+                     <div class="signInFormText">Email:</div>
+                     <input type = email name = "email" style=" margin-bottom: 10px; text-align: left;" placeholder=""  required /><br>
+                     <div class="signInFormText">Password:</div>
+                     <input type = password name = "p"  style="margin-bottom: 10px; text-align: left;" placeholder="" required /> <br>
+                     <div class="signInFormText">Confirm Password:</div>
+                     <input type = password name = "p2" style=" margin-bottom: 10px; text-align: left;" placeholder=" " required /> <br>
+                     <div class="button-container-13" id = 'loginButton' style="width: 80%;">
                         <button id='work2' type="button" name="Hover" >Signup</button>
-                           
-                    </div>
-
-                </form>
-
+                     </div>
+                  </form>
+               </div>
             </div>
-
-        </div>
-
-
-
-        </div>
-
-    </div>
-
-    <div id="dtMain3Bottom">
-            
-             <div id="dtMain3ContentBox2">
-                
-                <div class="dtMain3Content">Review Community workouts to find your best fit!</div>
-
-            </div>
-
-        </div>
-
-<!--     <div id="dtMain3">
-
-        
-
-        
-
-
-
-    </div>
- -->
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-    <div id = 'introScreen' onclick="tester()">
-        <div id="introBoth">
-        <div id="introTitle"><div id="titleImageWhite"></div></div>
-        <div id="intoTitleUnder">the workout app for people who workout</div>
-    </div>
-    </div>
- -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-        <div id ='mobileMainContainer'>
-        <div id = 'aboveName'></div>
-
-  
-
-        <div class='websiteBlock'></div>
-        
-        <div id="signInBox">
-
-            
-
-            
-
+         </div>
+      </div>
+      <div id="dtMain3Bottom">
+         <div id="dtMain3ContentBox2">
+            <div class="dtMain3Content">Review Community workouts to find your best fit!</div>
+         </div>
+      </div>
+      <!--     <div id="dtMain3">
+         </div>
+         -->
+      <!-- 
+         <div id = 'introScreen' onclick="tester()">
+             <div id="introBoth">
+             <div id="introTitle"><div id="titleImageWhite"></div></div>
+             <div id="intoTitleUnder">the workout app for people who workout</div>
+         </div>
+         </div>
+         -->
+      <div id ='mobileMainContainer'>
+         <div id = 'aboveName'></div>
+         <div class='websiteBlock'></div>
+         <div id="signInBox">
             <div id="signInForm">
-                <div id ='dumbOlX' onclick="closeOptions()">x</div>
-
-                <form method="POST" action="{{url_for('showLogin')}}" enctype="multipart/form-data" id='signIn_Form'>
-
-                    <input type = email name = "email" style="color: #fff;" placeholder="Email" required /><br>
-
-                    <input type = password name = "p" style="color: #fff;" placeholder="Password" required /> <br>
-
-                    <div class='forgot_pw' style="width: 100%; color: #fff;" onclick="forgotPW()">Forgot your password?</div>             
-
-                    <div class="button-container-13"  style="color: #fff;" id = 'loginButton' style="width: 80%;">
-
-                        <button id='work' type="button" style="color: #fff;" name="Hover">Login</button>
-                           
-                    </div>
-
-                </form>
-
+               <div id ='dumbOlX' onclick="closeOptions()">x</div>
+               <form method="POST" action="{{url_for('showLogin')}}" enctype="multipart/form-data" id='signIn_Form'>
+                  <input type = email name = "email" style="color: #fff;" placeholder="Email" required /><br>
+                  <input type = password name = "p" style="color: #fff;" placeholder="Password" required /> <br>
+                  <div class='forgot_pw' style="width: 100%; color: #fff;" onclick="forgotPW()">Forgot your password?</div>
+                  <div class="button-container-13"  style="color: #fff;" id = 'loginButton' style="width: 80%;">
+                     <button id='work' type="button" style="color: #fff;" name="Hover">Login</button>
+                  </div>
+               </form>
             </div>
-
             <div id="forgotForm">
-
-                <form method="POST" action="{{url_for('forgotPW')}}" enctype="multipart/form-data" id='forgot_Form'>
-
-                    <input type = email name = "email" placeholder="Email" focus required /><br>         
-
-                    <div class="button-container-2" id = 'forgotButton' style="width: 80%;">
-                                
-                        <span class="mas" >Recover</span>
-
-                        <button id='work3' type="button" name="Hover">Continue</button>
-                           
-                    </div>
-
-                </form>
-
+               <form method="POST" action="{{url_for('forgotPW')}}" enctype="multipart/form-data" id='forgot_Form'>
+                  <input type = email name = "email" placeholder="Email" focus required /><br>         
+                  <div class="button-container-2" id = 'forgotButton' style="width: 80%;">
+                     <span class="mas" >Recover</span>
+                     <button id='work3' type="button" name="Hover">Continue</button>
+                  </div>
+               </form>
             </div>
-
             <div id = 'signInOptions'>
-                
-                <div class = 'signInCreate noSelect'>
-                    
-                    <div class="button-container-13 noSelect" id = 'loginButton' >
-
-                        <button id='work' type="button" name="Hover" onclick="showLogin()" class="noSelect">Login</button>
-                           
-                    </div>
-
-                </div>
-
+               <div class = 'signInCreate noSelect'>
+                  <div class="button-container-13 noSelect" id = 'loginButton' >
+                     <button id='work' type="button" name="Hover" onclick="showLogin()" class="noSelect">Login</button>
+                  </div>
+               </div>
                <!--  <div class = 'signInCreate' onclick="showSignUp()">Sign-up</div> -->
-
             </div>
-
-        </div>
-
-        <div id = 'signUpBox'>
-
+         </div>
+         <div id = 'signUpBox'>
             <div id ='dumbOlX2' onclick="closeOptions2()">x</div>
-            
             <div id = 'signUpForm'>
-                
-                <form method="POST" action="{{url_for('createAccount')}}" enctype="multipart/form-data" id='signUp_Form'>
-
-                    <input type = text name = "name_first" placeholder="First Name" focus required /><br>
-
-                    <input type = text name = "name_last" placeholder="Last Name"  required /><br>
-
-                    <input type = email name = "email" placeholder="Email"  required /><br>
-
-                    <input type = password name = "p" placeholder="Password" required /> <br>
-
-                    <input type = password name = "p2" placeholder=" Retype Password" required /> <br>
-
-                    <div class="button-container-2" id = 'loginButton' style="width: 80%;">
-                                
-                        <span class="mas" >Welcome</span>
-
-                        <button id='work2' type="button" name="Hover">Create</button>
-                           
-                    </div>
-
-                </form>
-
+               <form method="POST" action="{{url_for('createAccount')}}" enctype="multipart/form-data" id='signUp_Form'>
+                  <input type = text name = "name_first" placeholder="First Name" focus required /><br>
+                  <input type = text name = "name_last" placeholder="Last Name"  required /><br>
+                  <input type = email name = "email" placeholder="Email"  required /><br>
+                  <input type = password name = "p" placeholder="Password" required /> <br>
+                  <input type = password name = "p2" placeholder=" Retype Password" required /> <br>
+                  <div class="button-container-2" id = 'loginButton' style="width: 80%;">
+                     <span class="mas" >Welcome</span>
+                     <button id='work2' type="button" name="Hover">Create</button>
+                  </div>
+               </form>
             </div>
-
-        </div>
-
-    </div>
-
-
+         </div>
+      </div>
+	   
 <script>
-
-
-
     document.getElementById('dumbOlX').style.display = 'none';
-    document.getElementById('signInForm').style.display = 'none';
-    document.getElementById('forgotForm').style.display = 'none';
-   
-
-    var form = document.getElementById('signIn_Form');
-    document.getElementById('work').addEventListener("click", function(){
-        console.log('clicked');
-        form.submit();
-    });
-
-    var form2 = document.getElementById('signUp_Form');
-    document.getElementById('work2').addEventListener("click", function(){
-        form2.submit();
-    });
-
-    var form3 = document.getElementById('forgot_Form');
-    document.getElementById('work3').addEventListener("click", function(){
-        form3.submit();
-    });
-
-    var form4 = document.getElementById('signIn_Form2');
-    document.getElementById('work4').addEventListener("click", function(){
-        console.log('clicked');
-        form.submit();
-    });
+document.getElementById('signInForm').style.display = 'none';
+document.getElementById('forgotForm').style.display = 'none';
 
 
+var form = document.getElementById('signIn_Form');
+document.getElementById('work').addEventListener("click", function() {
+    console.log('clicked');
+    form.submit();
+});
 
-    // tester();
+var form2 = document.getElementById('signUp_Form');
+document.getElementById('work2').addEventListener("click", function() {
+    form2.submit();
+});
 
-    // function tester(){
+var form3 = document.getElementById('forgot_Form');
+document.getElementById('work3').addEventListener("click", function() {
+    form3.submit();
+});
 
-    //     starter()        
-    // }
-
-    
-
-   
-
-    // function starter(){
-        
-
-    // var timer = setInterval(function(){
-    //     document.getElementById('bgImage').style.display ='flex';
-    //     document.getElementById('introScreen').style.display = 'none';
-    //     clearInterval(timer);        
-    // }, 2500);
-    
-    // }
-    
-
-
-    function showLogin(){
-
-        document.getElementById('signInOptions').style.display = 'none';
-
-        document.getElementById('signInForm').style.display = 'flex';
-
-        document.getElementById('dumbOlX').style.display = 'block';
-    }
-
-    function closeOptions(){
-
-        document.getElementById('signInOptions').style.display = 'flex';
-
-        document.getElementById('signInForm').style.display = 'none';
-
-        document.getElementById('dumbOlX').style.display = 'none';
-
-        document.getElementById('forgotForm').style.display = 'none';
-    }
-
-    function closeOptions2(){
-        document.getElementById('signUpBox').style.display = 'none';
-
-         document.getElementById('dumbOlX2').style.display = 'none';
-
-         document.getElementById('signInBox').style.display = 'flex';
-
-         document.getElementById('signInOptions').style.display = 'flex';
-
-    }
-
-    function showSignUp(){
-        document.getElementById('signInBox').style.display = 'none';
-
-        document.getElementById('dumbOlX2').style.display = 'block';
-
-        document.getElementById('signUpBox').style.display = 'flex';
-    }
-
-    function forgotPW(){
-        document.getElementById('signInForm').style.display = 'none';
-        document.getElementById('forgotForm').style.display = 'flex';
-    }
-
-
-
-     $("#signInDT").click(function(){
-        $("#signInBox2").fadeIn(1000);
-        $("#signInForm2").fadeIn(1000);
-    });
-
-    $("#buttonSignUp").click(function(){
-
-        
-        $("#dtMain2Left").fadeOut(1000);
-        setTimeout(function(){
-            $("#signUpBox2").fadeIn(1000);    
-        },1000);
-    });
-
-    $("#dumbOlX22").click(function(){
-
-        
-        $("#signUpBox2").fadeOut(1000);
-        setTimeout(function(){
-            $("#dtMain2Left").fadeIn(1000);    
-        },1000);
-    });
-
-    var topofDiv = $("#dtMain").offset().top; //gets offset of header
-    var height = $("#dtMain").outerHeight(); //gets height of header
-
-     $("#dtMain2Left").hide();
-
-     $("#dtMain3ContentBox").hide();
-
-     $("#dtMain3ContentBox2").hide();
-
-     
-
-
-$(window).scroll(function(){
-    if($(window).scrollTop() > (topofDiv + (height - 525))) {       
-       
-        $("#dtMain3ContentBox").fadeIn(1000);
-
-    }
-
-    else{
-       
-        $("#dtMain3ContentBox").fadeOut(1000);
-
-    }
-
-    if($(window).scrollTop() > (topofDiv + (height + 200)) && $("#signUpBox2").css('display') == 'none') {       
-       
-        $("#dtMain2Left").fadeIn(1000);
-
-    }
-
-    else{
-       
-        $("#dtMain2Left").fadeOut(1000);
-
-    }
-
-    if($(window).scrollTop() > (topofDiv + (height + 600))) {       
-       
-        $("#dtMain3ContentBox2").fadeIn(1000);
-
-    }
-
-    else{
-       
-        $("#dtMain3ContentBox2").fadeOut(1000);
-
-    }
-
+var form4 = document.getElementById('signIn_Form2');
+document.getElementById('work4').addEventListener("click", function() {
+    console.log('clicked');
+    form.submit();
 });
 
 
-    $(function(){
 
-        
-        $("#smallTitleUnder").hide().delay(1000).fadeIn(1000);
+// tester();
+
+// function tester(){
+
+//     starter()        
+// }
 
 
-    });
 
+
+// function starter(){
+
+
+// var timer = setInterval(function(){
+//     document.getElementById('bgImage').style.display ='flex';
+//     document.getElementById('introScreen').style.display = 'none';
+//     clearInterval(timer);        
+// }, 2500);
+
+// }
+
+
+
+function showLogin() {
+    document.getElementById('signInOptions').style.display = 'none';
+    document.getElementById('signInForm').style.display = 'flex';
+    document.getElementById('dumbOlX').style.display = 'block';
+}
+
+function closeOptions() {
+    document.getElementById('signInOptions').style.display = 'flex';
+    document.getElementById('signInForm').style.display = 'none';
+    document.getElementById('dumbOlX').style.display = 'none';
+    document.getElementById('forgotForm').style.display = 'none';
+}
+
+function closeOptions2() {
+    document.getElementById('signUpBox').style.display = 'none';
+    document.getElementById('dumbOlX2').style.display = 'none';
+    document.getElementById('signInBox').style.display = 'flex';
+    document.getElementById('signInOptions').style.display = 'flex';
+}
+
+function showSignUp() {
+    document.getElementById('signInBox').style.display = 'none';
+    document.getElementById('dumbOlX2').style.display = 'block';
+    document.getElementById('signUpBox').style.display = 'flex';
+}
+
+function forgotPW() {
+    document.getElementById('signInForm').style.display = 'none';
+    document.getElementById('forgotForm').style.display = 'flex';
+}
+
+$("#signInDT").click(function() {
+    $("#signInBox2").fadeIn(1000);
+    $("#signInForm2").fadeIn(1000);
+});
+
+$("#buttonSignUp").click(function() {
+    $("#dtMain2Left").fadeOut(1000);
+    setTimeout(function() {
+        $("#signUpBox2").fadeIn(1000);
+    }, 1000);
+});
+
+$("#dumbOlX22").click(function() {
+    $("#signUpBox2").fadeOut(1000);
+    setTimeout(function() {
+        $("#dtMain2Left").fadeIn(1000);
+    }, 1000);
+});
+
+var topofDiv = $("#dtMain").offset().top; //gets offset of header
+var height = $("#dtMain").outerHeight(); //gets height of header
+$("#dtMain2Left").hide();
+$("#dtMain3ContentBox").hide();
+$("#dtMain3ContentBox2").hide();
+
+$(window).scroll(function() {
+    if ($(window).scrollTop() > (topofDiv + (height - 525))) {
+        $("#dtMain3ContentBox").fadeIn(1000);
+    } else {
+        $("#dtMain3ContentBox").fadeOut(1000);
+    }
+    if ($(window).scrollTop() > (topofDiv + (height + 200)) && $("#signUpBox2").css('display') == 'none') {
+        $("#dtMain2Left").fadeIn(1000);
+    } else {
+        $("#dtMain2Left").fadeOut(1000);
+    }
+    if ($(window).scrollTop() > (topofDiv + (height + 600))) {
+        $("#dtMain3ContentBox2").fadeIn(1000);
+    } else {
+        $("#dtMain3ContentBox2").fadeOut(1000);
+    }
+});
+	
+$(function() {
+    $("#smallTitleUnder").hide().delay(1000).fadeIn(1000);
+});
 
 </script>
 
