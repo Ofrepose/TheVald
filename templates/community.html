@@ -1,204 +1,112 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<title>The Vald</title>
-
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
-
-  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-
-  <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
-
-  <meta http-equiv="X-UA-Compatible" content="IE=9" />
-
-</head>
-
-<body>
-<div class='topBar'>
-
-  
-  <div id = 'ws_nameMain'><div id = 'aboveNameMain'></div>
-        <div id = 'undernameMain'>Community</div>
+   <head>
+      <title>The Vald</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+      <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+      <meta http-equiv="X-UA-Compatible" content="IE=9" />
+   </head>
+   <body>
+      <div class='topBar'>
+         <div id = 'ws_nameMain'>
+            <div id = 'aboveNameMain'></div>
+            <div id = 'undernameMain'>Community</div>
+         </div>
+         <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
       </div>
-  <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
-
-
-  </div>
-
-
-  <div id = underBar>
-    
-    <div id = 'underBarFeatured' onclick="showFeatured()">Featured</div>
-    <div id = 'underBarPopular' onclick="showPopular()">Popular</div>
-
-
-  </div>
-
-
-  <div id = 'accountMainDiv' >
-
-      <div class = 'accountSquareMain pullDown' id = accountHidden>
-
-        <div class="accountTopBarItem">
-        
-        <div id='logoffIcon' class='pullDown' onclick="logoutAsk()" ></div>
-        <div id = 'accountTitle'>Account Info</div> 
-        <div id='closeIcon' class='pullDown' onclick="closeAccount()" ></div>
-
-                                
-        </div>
-           
-
-
-         
-                           
-        
-
+      <div id = underBar>
+         <div id = 'underBarFeatured' onclick="showFeatured()">Featured</div>
+         <div id = 'underBarPopular' onclick="showPopular()">Popular</div>
       </div>
-
-    </div>
-
-
-  <div class= indexMain id = "mainImage">
-
-
-
-    <div id="mainBox"></div>
-
-        <div id="mainContentFeatured" class=>
-          
-          {% for w in range ( 0, uploaded_workouts|length) %}
-
-           {% if uploaded_workouts[w].featured == True %}
-  <div id = 'mainSquaresBodyMain' class = pullDown>
-
-      <div class = 'mainSquareMain'>
-        
-        <div class="button-container-13" id = 'showDates'>
-                                
-           <a href="{{url_for('download_workout', workout_id = uploaded_workouts[w].id)}}"><div id='downloadIcon' class='pullDown' onclick="downloadNow()"></div></a>
-
-            <a href="{{url_for('workoutInfo', workout_id = uploaded_workouts[w].id)}}"><div id='infoIcon' class='pullDown'  ></div></a>
-
-            <div id="downloadCount">{{uploaded_workouts[w].download_count}}DLs</div>
-
-            
-
-              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = images[w])}})">{{uploaded_workouts[w].name.capitalize()}}</button>
-
-          
-                           
-          </div>
-
+      <div id = 'accountMainDiv' >
+         <div class = 'accountSquareMain pullDown' id = accountHidden>
+            <div class="accountTopBarItem">
+               <div id='logoffIcon' class='pullDown' onclick="logoutAsk()" ></div>
+               <div id = 'accountTitle'>Account Info</div>
+               <div id='closeIcon' class='pullDown' onclick="closeAccount()" ></div>
+            </div>
+         </div>
       </div>
-
-    </div>
-
-    {% endif %}
-
-  {% endfor %}
-
-  <div id =fillerBar></div>
-
-
-        </div>
-
-
-        <div id="mainContentPopular" >
-          
-          {% for w in uploaded_workouts|sort(attribute = 'download_count', reverse=True) %}
-
-          
-          {% if this_user.id != w.original_owner %}
-  <div id = 'mainSquaresBodyMain' class=pullUp>
-
-      <div class = 'mainSquareMain'>
-
-        <div class="button-container-13" id = 'showDates'>
-                                
-           <a href="{{url_for('download_workout', workout_id = w.id)}}"><div id='downloadIcon' class='pullDown' onclick="downloadNow()" ></div></a>
-
-           <a href="{{url_for('workoutInfo', workout_id = w.id)}}"><div id='infoIcon' class='pullDown'  ></div></a>
-
-           <div id="downloadCount">{{w.download_count}}DLs</div>
-
-            
-
-              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = images[range ( 0, images|length) | random ])}})">{{w.name.capitalize()}}</button>
-
-            
-                           
-          </div>
-
+      <div class= indexMain id = "mainImage">
+         <div id="mainBox"></div>
+         <div id="mainContentFeatured" class=>
+            {% for w in range ( 0, uploaded_workouts|length) %}
+            {% if uploaded_workouts[w].featured == True %}
+            <div id = 'mainSquaresBodyMain' class = pullDown>
+               <div class = 'mainSquareMain'>
+                  <div class="button-container-13" id = 'showDates'>
+                     <a href="{{url_for('download_workout', workout_id = uploaded_workouts[w].id)}}">
+                        <div id='downloadIcon' class='pullDown' onclick="downloadNow()"></div>
+                     </a>
+                     <a href="{{url_for('workoutInfo', workout_id = uploaded_workouts[w].id)}}">
+                        <div id='infoIcon' class='pullDown'  ></div>
+                     </a>
+                     <div id="downloadCount">{{uploaded_workouts[w].download_count}}DLs</div>
+                     <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = images[w])}})">{{uploaded_workouts[w].name.capitalize()}}</button>
+                  </div>
+               </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div id =fillerBar></div>
+         </div>
+         <div id="mainContentPopular" >
+            {% for w in uploaded_workouts|sort(attribute = 'download_count', reverse=True) %}
+            {% if this_user.id != w.original_owner %}
+            <div id = 'mainSquaresBodyMain' class=pullUp>
+               <div class = 'mainSquareMain'>
+                  <div class="button-container-13" id = 'showDates'>
+                     <a href="{{url_for('download_workout', workout_id = w.id)}}">
+                        <div id='downloadIcon' class='pullDown' onclick="downloadNow()" ></div>
+                     </a>
+                     <a href="{{url_for('workoutInfo', workout_id = w.id)}}">
+                        <div id='infoIcon' class='pullDown'  ></div>
+                     </a>
+                     <div id="downloadCount">{{w.download_count}}DLs</div>
+                     <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = images[range ( 0, images|length) | random ])}})">{{w.name.capitalize()}}</button>
+                  </div>
+               </div>
+            </div>
+            {% endif %}
+            {% if this_user.id == w.original_owner %}
+            <div id = 'mainSquaresBodyMain' class=pullUp>
+               <div class = 'mainSquareMain'>
+                  <div class="button-container-13" id = 'showDates'>
+                     <div id='mineIcon' class='pullDown' ></div>
+                     <a href="{{url_for('workoutInfo', workout_id = w.id)}}">
+                        <div id='infoIcon' class='pullDown'  ></div>
+                     </a>
+                     <div id="downloadCount">{{w.download_count}}DLs</div>
+                     <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = images[range ( 0, images|length) | random ])}})">{{w.name.capitalize()}}</button>
+                  </div>
+               </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div id =fillerBar></div>
+         </div>
       </div>
-
-    </div>  
-
-     {% endif %}
-
-      {% if this_user.id == w.original_owner %}
-  <div id = 'mainSquaresBodyMain' class=pullUp>
-
-      <div class = 'mainSquareMain'>
-
-        <div class="button-container-13" id = 'showDates'>
-                                
-           <div id='mineIcon' class='pullDown' ></div>
-
-           <a href="{{url_for('workoutInfo', workout_id = w.id)}}"> <div id='infoIcon' class='pullDown'  ></div></a>
-
-           <div id="downloadCount">{{w.download_count}}DLs</div>
-
-            
-
-              <button id='mainSquareButton' type="button" name="Hover" style="background-image:url({{url_for('static', filename = images[range ( 0, images|length) | random ])}})">{{w.name.capitalize()}}</button>
-
-     
-                           
-          </div>
-
+      <div id = 'downloadingDiv'">
+         <div id = loadingText class="pullDown">Downloading Workout...</div>
+         <div class="lds-roller pullDown">
+         </div>
       </div>
-
-    </div>  
-
-     {% endif %}
-
-  
-
-  {% endfor %}
-
-  <div id =fillerBar></div>
-
-
-        </div>
-
-
-
-
- 
-
-  </div>
-
-
-  <div id = 'downloadingDiv'"><div id = loadingText class="pullDown">Downloading Workout...</div><div class="lds-roller pullDown"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-
-
-   <div class = 'bottomBarNew'>
-   
-   <div id = 'homeContainer' onclick="home()"><div id = 'homeButton'></div><div id = 'homeOnButton'></div></div>
-
-   <div id = 'communityContainer'><div id = 'communityButton'></div><div id = 'communityOnButton'></div></div>
-
-    <div id = 'graphContainer' onclick="graphs()"><div id = 'graphButton'></div><div id = 'graphOnButton'></div></div>
-
-
- </div>
-
+      <div class = 'bottomBarNew'>
+         <div id = 'homeContainer' onclick="home()">
+            <div id = 'homeButton'></div>
+            <div id = 'homeOnButton'></div>
+         </div>
+         <div id = 'communityContainer'>
+            <div id = 'communityButton'></div>
+            <div id = 'communityOnButton'></div>
+         </div>
+         <div id = 'graphContainer' onclick="graphs()">
+            <div id = 'graphButton'></div>
+            <div id = 'graphOnButton'></div>
+         </div>
+      </div>
 
 <script>
 
@@ -241,7 +149,7 @@
     document.getElementById('mainContentPopular').style.visibility = 'hidden';
     document.getElementById('mainContentPopular').style.display = 'none';
     underBarFeatured.style.color = 'skyblue';
-  underBarFeatured.style.textDecoration = 'underline';
+    underBarFeatured.style.textDecoration = 'underline';
     underBarPopular.style.color = 'black';
     underBarPopular.style.textDecoration = 'none';
   }
