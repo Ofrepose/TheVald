@@ -1,68 +1,29 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<title>The Vald</title>
-
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
-
-  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />	
-
-</head>
-
-<body>
-
-   <div class='topBar'>        
-
-        <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
-
-       
-        
-        
-
-    </div>
-
-	<div class= indexMain id = "mainImage">
-
-    <div id="mainBox"></div>
-        <div id="mainContent" style="min-width: 60vw;">
-        	
-
-          <form id='nameExercise' method = "POST" action = "{{url_for('desc_e')}}" enctype="multipart/form-data">
-
-        <input type = "text" name = "name" placeholder="name of workout" id=name focus required />
-
-        <textarea class="descInputArea" name='description' rows='55' cols='50' width="100%" required style="width: 100%;" placeholder="Describe your workout here. Focus on the body areas it works on and any tips you might have!" ></textarea>
-        
-        
-
-        
-
-    </form>
-  
-</div>
-
-  </div>
-
-<div class='bottomBar'>
-    
-
-    
-
-    <div class="button-container-13" id = 'createRoutine' >                            
-                    
-
-                    <button id='work' type="button" name="Hover" onclick="createE()">Create Exercise</button>
-                           
-                </div> 
-
-
-    </div>
-    
+   <head>
+      <title>The Vald</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+      <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+   </head>
+   <body>
+      <div class='topBar'>
+         <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+      </div>
+      <div class= indexMain id = "mainImage">
+         <div id="mainBox"></div>
+         <div id="mainContent" style="min-width: 60vw;">
+            <form id='nameExercise' method = "POST" action = "{{url_for('desc_e')}}" enctype="multipart/form-data">
+               <input type = "text" name = "name" placeholder="name of workout" id=name focus required />
+               <textarea class="descInputArea" name='description' rows='55' cols='50' width="100%" required style="width: 100%;" placeholder="Describe your workout here. Focus on the body areas it works on and any tips you might have!" ></textarea>
+            </form>
+         </div>
+      </div>
+      <div class='bottomBar'>
+         <div class="button-container-13" id = 'createRoutine' >                            
+            <button id='work' type="button" name="Hover" onclick="createE()">Create Exercise</button>
+         </div>
+      </div>
 
 <script>
   function createE(){
