@@ -1,89 +1,74 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<title>The Vald</title>
-
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
-
-  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-
-  <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet"> 
-
-   <!-- import plugin script -->   <script src="{{ url_for('static', filename='Chart.min.js') }}"></script>
-
-
-</head>
-
-<body>
-
-  <div class='topBar'>
-
-  <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
-  <div id='topBarTitle'>{{date}}</div>
-  
-
-</div>
-
-
-
-   
-  <div id="stats"><canvas id="chart" width="600" height="400"></canvas>
-  </div>
-
-  
-
-
-
-  
-
-
-
-
+   <head>
+      <title>The Vald</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+      <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+      <!-- import plugin script -->   <script src="{{ url_for('static', filename='Chart.min.js') }}"></script>
+   </head>
+   <body>
+      <div class='topBar'>
+         <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+         <div id='topBarTitle'>{{date}}</div>
+      </div>
+      <div id="stats">
+         <canvas id="chart" width="600" height="400"></canvas>
+      </div>
 
 <script>
 
-    function goBack(){
+   function goBack() {
     window.location.href = "{{url_for('user_stats')}}";
-   }
+}
 
-   // bar chart data<br />
-   var barData = {
-   labels : [{% for item in labels %}
-                  "{{item}}",
-              {% endfor %}],
-   datasets : [
-      {
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-         data : [{% for item in values %}
-                      {{item}},
-                    {% endfor %}]
-      }
-      ]
+// bar chart data<br />
+var barData = {
+    labels: [{
+            %
+            for item in labels %
+        }
+        "{{item}}",
+        {
+            % endfor %
+        }
+    ],
+    datasets: [{
+        fillColor: "rgba(151,187,205,0.2)",
+        strokeColor: "rgba(151,187,205,1)",
+        pointColor: "rgba(151,187,205,1)",
+        data: [{
+                %
+                for item in values %
+            } {
+                {
+                    item
+                }
+            },
+            {
+                % endfor %
+            }
+        ]
+    }]
 
-   }
+}
 
 
-   var mychart = document.getElementById("chart").getContext("2d");
-  steps = 10;
-   max = "{{maxAmount}}";
-   // draw bar chart<br />
-   new Chart(mychart).Bar(barData, {
-        scaleOverride: true,
-        scaleSteps: steps,
-        scaleStepWidth: Math.ceil(max / steps),
-        scaleStartValue: 0,
-        scaleShowVerticalLines: true,
-        scaleShowGridLines : true,
-        barShowStroke : true,
-        scaleShowLabels: true
-   });
+var mychart = document.getElementById("chart").getContext("2d");
+steps = 10;
+max = "{{maxAmount}}";
+// draw bar chart<br />
+new Chart(mychart).Bar(barData, {
+    scaleOverride: true,
+    scaleSteps: steps,
+    scaleStepWidth: Math.ceil(max / steps),
+    scaleStartValue: 0,
+    scaleShowVerticalLines: true,
+    scaleShowGridLines: true,
+    barShowStroke: true,
+    scaleShowLabels: true
+});
 
 </script>
 </body>
