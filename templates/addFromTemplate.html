@@ -1,175 +1,102 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<title>The Vald</title>
-
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
-
-  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-
-    <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
-
-</head>
-
-<body>
-    <div class='topBar'>        
-
-        <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
-
-        <div id = 'ws_nameMain'><div id = 'aboveNameMain'>.the vald.</div>
-        <div id = 'undernameMain'>{{this_user.name_first}} {{this_user.name_last}}</div>
+   <head>
+      <title>The Vald</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+      <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+   </head>
+   <body>
+      <div class='topBar'>
+         <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+         <div id = 'ws_nameMain'>
+            <div id = 'aboveNameMain'>.the vald.</div>
+            <div id = 'undernameMain'>{{this_user.name_first}} {{this_user.name_last}}</div>
+         </div>
       </div>
-
-        
-        
-        
-
-    </div>
-
-    <div class= indexMain id = "mainImage">
-
-        <div id="mainBox" ></div>
-
-       
-
-        <form id= 'createExercise' method = "POST" action = "{{url_for('addExercise', thisWorkout_id = thisWorkout.id)}}" enctype="multipart/form-data" style="margin:0 auto;">
-
+      <div class= indexMain id = "mainImage">
+         <div id="mainBox" ></div>
+         <form id= 'createExercise' method = "POST" action = "{{url_for('addExercise', thisWorkout_id = thisWorkout.id)}}" enctype="multipart/form-data" style="margin:0 auto;">
             <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle">Exercise Name:</div>
-
-    	       <input id ='nameInput' type = "text" name = "exerciseName" placeholder="name..." value = "{{this_e_template.name}}" focus required style="width: 100%;" />
-
+               <div class="workoutLabelTitle">Exercise Name:</div>
+               <input id ='nameInput' type = "text" name = "exerciseName" placeholder="name..." value = "{{this_e_template.name}}" focus required style="width: 100%;" />
             </div>
-
             <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle"># of Sets:
- 
-    	       <input id="setNumberInput" type = "number" name = "sets" placeholder="sets" value = "{{this_e_template.sets}}" required /><br></div>
-
-           </div>
-
-           <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle"># of Reps:
-
-    	       <input id="repNumberInput" type = "number" name = "reps" placeholder="reps" value = "{{this_e_template.reps}}" required  /><br></div>
-
-           </div>
-
-           <input type= text" name = 'day' value={{day}} style="display: none;" />
-
-           <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle">Rest Between Sets:</div>
-        
-    	       <input type="number" id="rbsm"  name = "restBetweenMinutes" placeholder="minutes"  value = "{{this_e_template.rest_between_minutes}}" required style="margin: 0 auto" /> 
-
-    	       <input type="number" id="rbss" name = "restBetweenSeconds" placeholder="seconds" value = "{{this_e_template.rest_between_seconds}}" required style="margin: 0 auto" /><br>
-
-           </div>
-
-           <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle">Time for each set:</div>
-
-    	       <input id="timeForSetInput" type="number" name = "timeForSet" placeholder="time for set (in seconds)" value = "{{this_e_template.time_for_set}}" required style="width: 100%;" /><br>
-
-           </div>
-
-           
-
-        </form>
-
-                
-
-
-
-       
-
-    </div>
-
-    <div class='bottomBar'>
-    
-
-
-
-    <div class="button-container-12" id = 'createExerciseButton' >
-                                
-                   
-
-                    <button id='work' type="button" name="Hover" onclick="createE()">Add</button>
-                           
-                </div> 
-
-
-    </div>
+               <div class="workoutLabelTitle"># of Sets:
+                  <input id="setNumberInput" type = "number" name = "sets" placeholder="sets" value = "{{this_e_template.sets}}" required /><br>
+               </div>
+            </div>
+            <div class="workoutLabelDiv">
+               <div class="workoutLabelTitle"># of Reps:
+                  <input id="repNumberInput" type = "number" name = "reps" placeholder="reps" value = "{{this_e_template.reps}}" required  /><br>
+               </div>
+            </div>
+            <input type= text" name = 'day' value={{day}} style="display: none;" />
+            <div class="workoutLabelDiv">
+               <div class="workoutLabelTitle">Rest Between Sets:</div>
+               <input type="number" id="rbsm"  name = "restBetweenMinutes" placeholder="minutes"  value = "{{this_e_template.rest_between_minutes}}" required style="margin: 0 auto" /> 
+               <input type="number" id="rbss" name = "restBetweenSeconds" placeholder="seconds" value = "{{this_e_template.rest_between_seconds}}" required style="margin: 0 auto" /><br>
+            </div>
+            <div class="workoutLabelDiv">
+               <div class="workoutLabelTitle">Time for each set:</div>
+               <input id="timeForSetInput" type="number" name = "timeForSet" placeholder="time for set (in seconds)" value = "{{this_e_template.time_for_set}}" required style="width: 100%;" /><br>
+            </div>
+         </form>
+      </div>
+      <div class='bottomBar'>
+         <div class="button-container-12" id = 'createExerciseButton' >
+            <button id='work' type="button" name="Hover" onclick="createE()">Add</button>
+         </div>
+      </div>
 
 <script>
 
 
-     document.getElementById('createExerciseButton').style.display='flex';
-     document.getElementById('createExercise').style.display='flex';
+     document.getElementById('createExerciseButton').style.display = 'flex';
+document.getElementById('createExercise').style.display = 'flex';
 
 
-    
-    
 
 
-    function cancel(){
-         window.location.href = "{{url_for('workout', id = thisWorkout.id)}}";
-        
+function cancel() {
+    window.location.href = "{{url_for('workout', id = thisWorkout.id)}}";
+
+}
+
+function goBack() {
+    window.location.href = '{{url_for(day, workout_id = thisWorkout.id)}}';
+
+}
+
+function createE() {
+    console.log('inside create E');
+    var form = document.getElementById('createExercise');
+    x = document.getElementById('setNumberInput').value;
+    y = document.getElementById('repNumberInput').value;
+    rbsmVar = document.getElementById('rbsm').value;
+    rbssVar = document.getElementById('rbss').value;
+    tfsi = document.getElementById('timeForSetInput').value;
+    if ((x % 1) != 0 || x == '') {
+        alert("Please input your sets as a number");
+        return false;
+    } else if ((y % 1) != 0 || y == '') {
+        alert("Please input your reps as a number");
+        return false;
+    } else if ((rbsmVar % 1) != 0 || rbsmVar == '') {
+        alert("Please input your Rest Between Sets as a number");
+        return false;
+    } else if ((rbssVar % 1) != 0 || rbssVar == '') {
+        alert("Please input your Rest Between Sets as a number");
+        return false;
+    } else if ((tfsi % 1) != 0 || tfsi == '') {
+        alert("Please input your time to do sets as a number");
+        return false;
+    } else {
+        form.submit();
     }
-
-    function goBack(){        
-        window.location.href = '{{url_for(day, workout_id = thisWorkout.id)}}';      
-        
-    }
-
-    function createE(){
-        console.log('inside create E');
-        var form = document.getElementById('createExercise');
-        x = document.getElementById('setNumberInput').value;
-        y = document.getElementById('repNumberInput').value;
-        rbsmVar = document.getElementById('rbsm').value;
-        rbssVar = document.getElementById('rbss').value;
-        tfsi = document.getElementById('timeForSetInput').value;
-        if ((x%1) != 0 || x == ''){
-            alert("Please input your sets as a number");
-            return false;
-        }
-        else if ((y%1) != 0 || y ==''){
-            alert("Please input your reps as a number");
-            return false;
-        }
-        else if ((rbsmVar%1) != 0 || rbsmVar ==''){
-            alert("Please input your Rest Between Sets as a number");
-            return false;
-        }
-        else if ((rbssVar%1) != 0 || rbssVar ==''){
-            alert("Please input your Rest Between Sets as a number");
-            return false;
-        }
-        else if ((tfsi%1) != 0 || tfsi ==''){
-            alert("Please input your time to do sets as a number");
-            return false;
-        }
-        else{           
-            form.submit();
-        }
-    }
-
-
-    
-
-
-
+}
+							     
 </script>
 
 </body>
