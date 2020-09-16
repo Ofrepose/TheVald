@@ -1,589 +1,386 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<title>The Vald</title>
-
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
-
-  <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-
-    <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
-
-</head>
-
-<body>
-    <div class='topBar'>        
-
-        <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
-
-        <div id='addIcon2' class='pullDown' onclick="showAddOptions()" ></div>
-
-        <div id = 'ws_nameMain'><div id = 'aboveNameMain'></div>
-        <div id = 'undernameMain'>{{thisWorkout.name}} &#9673 {{day.capitalize()}}</div>
+   <head>
+      <title>The Vald</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+      <link rel="stylesheet" type=text/css media="screen and (max-width:950px)" href="{{ url_for('static', filename='defaultSmall.css') }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <link href="https://fonts.googleapis.com/css?family=Cinzel|Inconsolata" rel="stylesheet">
+   </head>
+   <body>
+      <div class='topBar'>
+         <div id='backIcon' class='pullDown' onclick="goBack()" ></div>
+         <div id='addIcon2' class='pullDown' onclick="showAddOptions()" ></div>
+         <div id = 'ws_nameMain'>
+            <div id = 'aboveNameMain'></div>
+            <div id = 'undernameMain'>{{thisWorkout.name}} &#9673 {{day.capitalize()}}</div>
+         </div>
       </div>
-
-      
-        
-        
-
-    </div>
-
-    <div class= indexMain id = "mainImage">
-
-        <div id="mainBox" ></div>
-
-        <div id="mainContentExercises" >
-
-            <div class="titleHead" style="margin: 10px auto;" >{{thisWorkout.name.capitalize()}}</div> 
-
+      <div class= indexMain id = "mainImage">
+         <div id="mainBox" ></div>
+         <div id="mainContentExercises" >
+            <div class="titleHead" style="margin: 10px auto;" >{{thisWorkout.name.capitalize()}}</div>
             {% if all_e | length > 0 %}
-
-                <div class='exercises'>
-
-                    {% for a in all_e %}
-    	
-    	               <div class='exercisesContent'>
-
-
-
-
-
-                            <div class = exerciseNameDiv><div class=exerciseNameTitle >{{a.name.upper()}}</div><div class = 'nameDivInstructionsIcon' onclick="showOptions('{{a.name}}')"></div></div>
-
-
-                           <div class = 'exerciseOptions' id="{{a.name}}" >
-
-                            <div class='cancelOptionsIcons' onclick="cancelOptions()"></div>
-
-                            <div class="exerciseOptionsItemsDiv" >
-
-                                
-
-                                <a style='width: 90%; height: 25px;' href = "{{url_for('editExercise',thisWorkout_id = thisWorkout.id, thisExercise_id = a.id, day = day)}}"><div class="exerciseOptionsEditItem pullUp" onclick="findNumber('{{a.id}}')">Edit Exercise</div></a>
-
-                                {% for e in all_e_desc if e.name.lower() == a.name.lower() %}
-
-                                    <div class="exerciseOptionsItemInstructions pullUp" onclick="showDescSolo('{{e.id}}')">Instructions</div>
-
-                                {% endfor %}
-
-                                <br>
-
-                                 <div class="exerciseOptionsItem pullUp" onclick="deleteConfirm('1{{a.name}}')">Delete Exercise</div>
-
-                            
-
-                            </div>      
-
-
-                            </div>
-
-                            <div class="deleteConfirmExercise" id = '1{{a.name}}'>
-
-                                <div class="deleteConfirmExerciseInnerDiv">
-                                    <div class="deleteConfirmExerciseOptionsMain">Are you sure you would like to delete the exercise {{a.name}}?</div>
-                                    <div class="deleteConfirmExerciseOptions"><a style='width: 100%; height: 25px;' href = "{{url_for('del_Exercise',exercise_id = a.id, w_id = thisWorkout.id, day= day)}}">Confirm</a></div>
-                                    <div class="deleteConfirmExerciseOptions" onclick="cancelDelete()">Cancel</div>
-
-                                </div>
-
-                            </div>
-                            
-                            
-
-                           <div class="exercisesContentMain">
-
-                                Sets: {{a.sets}}<br>
-
-                               Reps: {{a.reps}}<br>
-
-                               {% if a.rest_between_minutes == 0 %}
-
-                                  Rest time: {{a.rest_between_seconds}} Seconds
-
-                               {% endif %}
-
-                               {% if a.rest_between_minutes > 0 %}
-
-                                  Rest time: {{a.rest_between_minutes}}:{{a.rest_between_seconds}}
-
-                               {% endif %}<br>
-
-                               Time for set: {{a.time_for_set}} <br>
-
-                               {% if a.previous_weight != 0 %}
-
-                                Previous Weight: {{a.previous_weight}}
-
-                                {% endif %}
-                              
-
-                            </div>
-
-                            <br>
-
-                            <a style='width: 100%;' href = "{{url_for('beginWorkout_weight', workout_id = thisWorkout.id, exercise_id = a.id)}}"><div class='goButton' class='pullDown' >GO!</div></a>
-
-                           <!--  <a style='width: 100%;' href = "{{url_for('beginWorkout_weight', workout_id = thisWorkout.id, exercise_id = a.id)}}"><div id='startExerciseButton' class='pullDown' ></div></a> -->
-
-                           
-        
-
-                            <!-- <div class="button-container-1">
-                                <a  style='width: 100%;' href = "{{url_for('del_Exercise_Confirm', exercise_id = a.id,w_id = thisWorkout.id)}}">
-                                <span class="mas">Delete</span>
-                                <button id='work' type="button" name="Hover">Delete</button>
-                            </a>
-                        </div> -->                     
-
-                       </div>
-
-
-
-                    {% endfor %}
-
-                </div>
-
+            <div class='exercises'>
+               {% for a in all_e %}
+               <div class='exercisesContent'>
+                  <div class = exerciseNameDiv>
+                     <div class=exerciseNameTitle >{{a.name.upper()}}</div>
+                     <div class = 'nameDivInstructionsIcon' onclick="showOptions('{{a.name}}')"></div>
+                  </div>
+                  <div class = 'exerciseOptions' id="{{a.name}}" >
+                     <div class='cancelOptionsIcons' onclick="cancelOptions()"></div>
+                     <div class="exerciseOptionsItemsDiv" >
+                        <a style='width: 90%; height: 25px;' href = "{{url_for('editExercise',thisWorkout_id = thisWorkout.id, thisExercise_id = a.id, day = day)}}">
+                           <div class="exerciseOptionsEditItem pullUp" onclick="findNumber('{{a.id}}')">Edit Exercise</div>
+                        </a>
+                        {% for e in all_e_desc if e.name.lower() == a.name.lower() %}
+                        <div class="exerciseOptionsItemInstructions pullUp" onclick="showDescSolo('{{e.id}}')">Instructions</div>
+                        {% endfor %}
+                        <br>
+                        <div class="exerciseOptionsItem pullUp" onclick="deleteConfirm('1{{a.name}}')">Delete Exercise</div>
+                     </div>
+                  </div>
+                  <div class="deleteConfirmExercise" id = '1{{a.name}}'>
+                     <div class="deleteConfirmExerciseInnerDiv">
+                        <div class="deleteConfirmExerciseOptionsMain">Are you sure you would like to delete the exercise {{a.name}}?</div>
+                        <div class="deleteConfirmExerciseOptions"><a style='width: 100%; height: 25px;' href = "{{url_for('del_Exercise',exercise_id = a.id, w_id = thisWorkout.id, day= day)}}">Confirm</a></div>
+                        <div class="deleteConfirmExerciseOptions" onclick="cancelDelete()">Cancel</div>
+                     </div>
+                  </div>
+                  <div class="exercisesContentMain">
+                     Sets: {{a.sets}}<br>
+                     Reps: {{a.reps}}<br>
+                     {% if a.rest_between_minutes == 0 %}
+                     Rest time: {{a.rest_between_seconds}} Seconds
+                     {% endif %}
+                     {% if a.rest_between_minutes > 0 %}
+                     Rest time: {{a.rest_between_minutes}}:{{a.rest_between_seconds}}
+                     {% endif %}<br>
+                     Time for set: {{a.time_for_set}} <br>
+                     {% if a.previous_weight != 0 %}
+                     Previous Weight: {{a.previous_weight}}
+                     {% endif %}
+                  </div>
+                  <br>
+                  <a style='width: 100%;' href = "{{url_for('beginWorkout_weight', workout_id = thisWorkout.id, exercise_id = a.id)}}">
+                     <div class='goButton' class='pullDown' >GO!</div>
+                  </a>
+                  <!--  <a style='width: 100%;' href = "{{url_for('beginWorkout_weight', workout_id = thisWorkout.id, exercise_id = a.id)}}"><div id='startExerciseButton' class='pullDown' ></div></a> -->
+                  <!-- <div class="button-container-1">
+                     <a  style='width: 100%;' href = "{{url_for('del_Exercise_Confirm', exercise_id = a.id,w_id = thisWorkout.id)}}">
+                     <span class="mas">Delete</span>
+                     <button id='work' type="button" name="Hover">Delete</button>
+                     </a>
+                     </div> -->                     
+               </div>
+               {% endfor %}
+            </div>
             {% endif %}
-
             {% if all_e | length < 1 %}
-
-                <div class='exercises'>                    
-        
-                       <div class='exercisesContent'>
-
-                       </div>
-
-                </div>
-
+            <div class='exercises'>
+               <div class='exercisesContent'>
+               </div>
+            </div>
             {% endif %}
-
-            
-
-          
-          
-            
-        </div>
-
-        <div id='addExerciseOptionsDiv'>
-
-            
-
+         </div>
+         <div id='addExerciseOptionsDiv'>
             {% if all_user_e|length > 0 %}
-            
             <div class = 'addExerciseOptions' onclick="showTemplates()">
-                
-                Use previous Exercise template
-
+               Use previous Exercise template
             </div>
-
             {% endif %}
-
             <div class = 'addExerciseOptions' onclick="showAdd()">
-                
-                Create new Exercise
-
+               Create new Exercise
             </div>
-
-        </div>
-
-
-        <div id='addExerciseTemplateDiv'>
-
-
+         </div>
+         <div id='addExerciseTemplateDiv'>
             {% for u in range(unique_names|length) %}
-                 <a class='addExerciseTemplateNames' href="{{url_for('addExerciseFromTemplate', thisWorkout_id = thisWorkout.id, e_id = name_id[u], day = day)}}">{{unique_names[u]}}</a>
+            <a class='addExerciseTemplateNames' href="{{url_for('addExerciseFromTemplate', thisWorkout_id = thisWorkout.id, e_id = name_id[u], day = day)}}">{{unique_names[u]}}</a>
             {% endfor %}
-
-           
-
-          
-        </div>
-
-
-
-
-
-
-
-
-        <form id= 'createExercise' method = "POST" action = "{{url_for('addExercise', thisWorkout_id = thisWorkout.id)}}" enctype="multipart/form-data" style="margin:0 auto;">
-
+         </div>
+         <form id= 'createExercise' method = "POST" action = "{{url_for('addExercise', thisWorkout_id = thisWorkout.id)}}" enctype="multipart/form-data" style="margin:0 auto;">
             <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle">Exercise Name:</div>
-
+               <div class="workoutLabelTitle">Exercise Name:</div>
                <input id ='nameInput' readonly="true" type = "text" name = "exerciseName" placeholder="Name..." autocomplete="off" focus required style="width: 100%;" onclick="nameList()" />
-
             </div>
-
             <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle"># of Sets:</div>
- 
+               <div class="workoutLabelTitle"># of Sets:</div>
                <input id="setNumberInput" type = "number" name = "sets" placeholder="How Many Sets?" required style="width: 100%;" /><br>
-
             </div>
-
             <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle"># of Reps:</div>
-
+               <div class="workoutLabelTitle"># of Reps:</div>
                <input id="repNumberInput" type = "number" name = "reps" placeholder="How Many Reps?" required style="width: 100%;" /><br>
-
             </div>
-
             <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle">Rest Between Sets:</div>
-        
+               <div class="workoutLabelTitle">Rest Between Sets:</div>
                <input class="restBetweenSetsInput" id="rbsm" type="number" name = "restBetweenMinutes" placeholder="Minutes" required style="margin: 0 auto" /> 
-
                <input class="restBetweenSetsInput" id="rbss" type="number" name = "restBetweenSeconds" placeholder="Seconds" required style="margin: 0 auto" /><br>
-
             </div>
-
-           <input type= text" name = 'day' value='friday' style="display: none;" />
-
-           <div class="workoutLabelDiv">
-
-                <div class="workoutLabelTitle">Time for each set:</div>
-
+            <input type= text" name = 'day' value='friday' style="display: none;" />
+            <div class="workoutLabelDiv">
+               <div class="workoutLabelTitle">Time for each set:</div>
                <input id="timeForSetInput" type="number" name = "timeForSet" placeholder="Time to do set (seconds)" required style="width: 100%;" /><br>
-
             </div>
-
-
-    	   
-           
-
-    	   
-
-           
-
-        </form>
-
-                
-
-           
-
-        <div id = 'deletePrompt'></div>
-
-        {% if all_e|length < 1 %}
- <div id = 'helpBoxFirstWorkout'>
-    
-    <div id = 'helpBoxFirstInside'>Create your first exercise by clicking the + button at the top right!</div>
-
-  </div>
-{% endif %}
-
-        <!-- <div class="button-container-2" id = 'addNew'>
-                                
-                <span class="mas">Add Exercise</span>
-
-                <button id='work' onclick="showAdd()" type="button" name="Hover">Add Exercise</button>
-                           
-            </div> -->
-
-            <br>
-
-            <!-- <div class="button-container-2" id = 'back'>
-                                
-                <span class="mas">Back</span>
-
-                <button id='work3' onclick="goBack()" type="button" name="Hover">Back</button>
-                           
-            </div> -->
-
-    </div>
-
-    <div class='bottomBar' id = 'showBottom'>
-    
-
-    
-
-    <div class="button-container-13" id = 'createExerciseButton' >
-                                
-                    
-
-                    <button id='work' type="button" name="Hover" onclick="createE()">Add</button>
-                           
-                </div> 
-
-
-    </div>
-
-
-
-
-
-    <div id = 'nameDiv' class='pullUp'>
-       <div id=cancelIcon onclick="cancelName()"></div>
-
-        <div class="nameDivCustomDiv">
-        <div class='nameDivItemUN' onclick="createCustom()" style="width: 100%; text-align: center;">Create Custom Exercise</div>
-
-        <div id = 'nameDivItem2'>
-            <input id ='nameInputCustom'  maxlength = "30" type = "text" name = "" placeholder="Custom Name"  autocomplete="off" focus required style="width: 80%; margin: auto;" /> 
-            <div id = 'checkIcon' onclick="customNameGo()"></div>
-        </div>
-
-    </div>
-        {% for a in all_e_desc|sort(attribute='name') %}
-            <div class= nameDivWhole>
-
-                <div class = nameDivItem onclick="addName('{{a.name}}')">{{a.name}}</div>
-                <div class = 'nameDivInstructionsIcon' onclick="showDesc('{{a.id}}')"></div>
-
-
-            </div>
-        {% endfor %}
-    </div>
-
-
-    <div id = 'nameDivDesc' class='pullUp'>
-        
-
-        {% for a in all_e_desc|sort(attribute='id') %}
+         </form>
+         <div id = 'deletePrompt'></div>
+         {% if all_e|length < 1 %}
+         <div id = 'helpBoxFirstWorkout'>
+            <div id = 'helpBoxFirstInside'>Create your first exercise by clicking the + button at the top right!</div>
+         </div>
+         {% endif %}
+         <!-- <div class="button-container-2" id = 'addNew'>
+            <span class="mas">Add Exercise</span>
             
-           <div class="nameDescItem"><div class='nameDivItemUN' style="width: 100%; text-align: center;"><strong>{{a.name}}</strong></div><br><div id = cancelIcon onclick="cancelDesc('{{a.id}}')"></div>{{a.description}}</div>
-        {% endfor %}
-
-        
-    </div>
-
-
-
-
+            <button id='work' onclick="showAdd()" type="button" name="Hover">Add Exercise</button>
+                       
+            </div> -->
+         <br>
+         <!-- <div class="button-container-2" id = 'back'>
+            <span class="mas">Back</span>
+            
+            <button id='work3' onclick="goBack()" type="button" name="Hover">Back</button>
+                       
+            </div> -->
+      </div>
+      <div class='bottomBar' id = 'showBottom'>
+         <div class="button-container-13" id = 'createExerciseButton' >
+            <button id='work' type="button" name="Hover" onclick="createE()">Add</button>
+         </div>
+      </div>
+      <div id = 'nameDiv' class='pullUp'>
+         <div id=cancelIcon onclick="cancelName()"></div>
+         <div class="nameDivCustomDiv">
+            <div class='nameDivItemUN' onclick="createCustom()" style="width: 100%; text-align: center;">Create Custom Exercise</div>
+            <div id = 'nameDivItem2'>
+               <input id ='nameInputCustom'  maxlength = "30" type = "text" name = "" placeholder="Custom Name"  autocomplete="off" focus required style="width: 80%; margin: auto;" /> 
+               <div id = 'checkIcon' onclick="customNameGo()"></div>
+            </div>
+         </div>
+         {% for a in all_e_desc|sort(attribute='name') %}
+         <div class= nameDivWhole>
+            <div class = nameDivItem onclick="addName('{{a.name}}')">{{a.name}}</div>
+            <div class = 'nameDivInstructionsIcon' onclick="showDesc('{{a.id}}')"></div>
+         </div>
+         {% endfor %}
+      </div>
+      <div id = 'nameDivDesc' class='pullUp'>
+         {% for a in all_e_desc|sort(attribute='id') %}
+         <div class="nameDescItem">
+            <div class='nameDivItemUN' style="width: 100%; text-align: center;"><strong>{{a.name}}</strong></div>
+            <br>
+            <div id = cancelIcon onclick="cancelDesc('{{a.id}}')"></div>
+            {{a.description}}
+         </div>
+         {% endfor %}
+      </div>
 
 <script>
 
-    document.getElementById('createExerciseButton').style.display='none';
-    var optionsDivs = document.getElementById('exerciseOptions');
-    var options_id = document.getElementsByClassName('exerciseOptions');
-    var deleteConfirmPrompts = document.getElementsByClassName('deleteConfirmExercise');
-    
+    document.getElementById('createExerciseButton').style.display = 'none';
+var optionsDivs = document.getElementById('exerciseOptions');
+var options_id = document.getElementsByClassName('exerciseOptions');
+var deleteConfirmPrompts = document.getElementsByClassName('deleteConfirmExercise');
 
-    
-    var e_id = 0;
 
-    function showOptions(a){
 
-        
-        document.getElementById(a).style.display = 'flex';
-   
-       
-        
-        console.log(a);
+var e_id = 0;
+
+function showOptions(a) {
+
+
+    document.getElementById(a).style.display = 'flex';
+
+
+
+    console.log(a);
+}
+
+function cancelOptions() {
+    for (i = 0; i < options_id.length; i++) {
+        options_id[i].style.display = 'none';
     }
 
-    function cancelOptions(){
-        for (i =0; i < options_id.length; i++){
-            options_id[i].style.display = 'none';
-        }
-        
+}
+
+function deleteConfirm(a) {
+
+    document.getElementById(a).style.display = 'flex';
+    cancelOptions()
+}
+
+function cancelDelete() {
+    for (i = 0; i < deleteConfirmPrompts.length; i++) {
+        deleteConfirmPrompts[i].style.display = 'none';
+    }
+}
+
+function findNumber(x) {
+    console.log(x);
+}
+
+function cancelName() {
+    document.getElementById('nameDiv').style.display = 'none';
+}
+
+
+
+function showTemplates() {
+    document.getElementById('addExerciseOptionsDiv').style.display = 'none';
+    document.getElementById('addExerciseTemplateDiv').style.display = 'flex';
+
+}
+
+function showAddOptions() {
+    if (document.getElementById('helpBoxFirstWorkout') != null) {
+        document.getElementById('helpBoxFirstWorkout').style.display = 'none';
+
+        document.getElementById('createExerciseButton').style.display = 'flex';
+        document.getElementById('addIcon2').style.display = 'none';
+        document.getElementById('addExerciseOptionsDiv').style.display = 'flex';
     }
 
-    function deleteConfirm(a){
-                
-        document.getElementById(a).style.display = 'flex';
-        cancelOptions()
-    }
-
-    function cancelDelete(){
-        for (i =0; i < deleteConfirmPrompts.length; i++){
-            deleteConfirmPrompts[i].style.display = 'none';
-        }
-    }
-
-    function findNumber(x){
-        console.log(x);
-    }
-
-    function cancelName(){
-        document.getElementById('nameDiv').style.display='none';
-    }
+    document.getElementById('addIcon2').style.display = 'none';
+    document.getElementById('mainContentExercises').style.display = 'none';
+    document.getElementById('addExerciseOptionsDiv').style.display = 'flex';
+}
 
 
+function showAdd() {
+    if (document.getElementById('helpBoxFirstWorkout') != null) {
+        document.getElementById('helpBoxFirstWorkout').style.display = 'none';
 
-    function showTemplates(){
-        document.getElementById('addExerciseOptionsDiv').style.display='none';
-        document.getElementById('addExerciseTemplateDiv').style.display='flex';
-        
-    }
-
-    function showAddOptions(){
-        if (document.getElementById('helpBoxFirstWorkout') != null){
-            document.getElementById('helpBoxFirstWorkout').style.display = 'none';
-                
-            document.getElementById('createExerciseButton').style.display='flex';            
-            document.getElementById('addIcon2').style.display='none';
-            document.getElementById('addExerciseOptionsDiv').style.display='flex'; 
-        }
-
-        document.getElementById('addIcon2').style.display='none';
-        document.getElementById('mainContentExercises').style.display ='none';
-        document.getElementById('addExerciseOptionsDiv').style.display='flex'; 
-    }
-    
-    
-    function showAdd(){
-        if (document.getElementById('helpBoxFirstWorkout') != null){
-            document.getElementById('helpBoxFirstWorkout').style.display = 'none';
-            
-            document.getElementById('showBottom').style.display = 'flex';
-            
-            
-            document.getElementById('createExerciseButton').style.display='flex';
-            
-            document.getElementById('addIcon2').style.display='none';
-
-        }
-        document.getElementById('createExercise').style.display = 'flex';
-        document.getElementById('addIcon2').style.display='none';
-        document.getElementById('mainContentExercises').style.display ='none';
-        document.getElementById('addExerciseOptionsDiv').style.display ='none';
-        document.getElementById('createExerciseButton').style.display='flex';
         document.getElementById('showBottom').style.display = 'flex';
-            
+
+
+        document.getElementById('createExerciseButton').style.display = 'flex';
+
+        document.getElementById('addIcon2').style.display = 'none';
+
+    }
+    document.getElementById('createExercise').style.display = 'flex';
+    document.getElementById('addIcon2').style.display = 'none';
+    document.getElementById('mainContentExercises').style.display = 'none';
+    document.getElementById('addExerciseOptionsDiv').style.display = 'none';
+    document.getElementById('createExerciseButton').style.display = 'flex';
+    document.getElementById('showBottom').style.display = 'flex';
+
+}
+
+function cancel() {
+    document.getElementById('createExercise').style.display = 'none';
+
+    document.getElementById('mainContentExercises').style.display = 'flex';
+    document.getElementById('addIcon2').style.display = 'flex';
+    document.getElementById('createExerciseButton').style.display = 'none';
+
+}
+
+function goBack() {
+    console.log(document.getElementById('createExercise').style.display)
+
+    if (document.getElementById('helpBoxFirstWorkout') != null) {
+        window.location.href = "{{url_for(day, workout_id = thisWorkout.id)}}";
     }
 
-    function cancel(){
+    if (document.getElementById('createExercise').style.display == 'flex') {
+        cancel()
+    } else if (document.getElementById('addExerciseTemplateDiv').style.display == 'flex') {
+        document.getElementById('addExerciseTemplateDiv').style.display = 'none';
+        document.getElementById('addIcon2').style.display = 'none';
+        document.getElementById('mainContentExercises').style.display = 'none';
+        document.getElementById('addExerciseOptionsDiv').style.display = 'flex';
+    } else if (document.getElementById('addExerciseOptionsDiv').style.display == 'flex') {
         document.getElementById('createExercise').style.display = 'none';
-       
-        document.getElementById('mainContentExercises').style.display ='flex';
-        document.getElementById('addIcon2').style.display='flex';
-        document.getElementById('createExerciseButton').style.display='none';
-        
+        document.getElementById('showBottom').style.display = 'none';
+        document.getElementById('mainContentExercises').style.display = 'flex';
+        document.getElementById('addIcon2').style.display = 'flex';
+        document.getElementById('createExerciseButton').style.display = 'none';
+        document.getElementById('addExerciseOptionsDiv').style.display = 'none';
+    } else {
+        window.location.href = "{{url_for('workout', id = thisWorkout.id)}}";
     }
 
-    function goBack(){
-        console.log(document.getElementById('createExercise').style.display)
+}
 
-        if (document.getElementById('helpBoxFirstWorkout') != null){
-            window.location.href="{{url_for(day, workout_id = thisWorkout.id)}}";    
-        }
-        
-        if (document.getElementById('createExercise').style.display == 'flex'){
-            cancel()
-        }
-        else if(document.getElementById('addExerciseTemplateDiv').style.display =='flex'){
-            document.getElementById('addExerciseTemplateDiv').style.display='none';
-            document.getElementById('addIcon2').style.display='none';
-            document.getElementById('mainContentExercises').style.display ='none';
-            document.getElementById('addExerciseOptionsDiv').style.display='flex'; 
-        }
-        else if(document.getElementById('addExerciseOptionsDiv').style.display == 'flex'){
-            document.getElementById('createExercise').style.display = 'none';
-            document.getElementById('showBottom').style.display = 'none';
-            document.getElementById('mainContentExercises').style.display ='flex';
-            document.getElementById('addIcon2').style.display='flex';
-            document.getElementById('createExerciseButton').style.display='none';
-            document.getElementById('addExerciseOptionsDiv').style.display='none';
-        }
-        else{
-            window.location.href = "{{url_for('workout', id = thisWorkout.id)}}";   
-        }
-        
+function createE() {
+    var form = document.getElementById('createExercise');
+    x = document.getElementById('setNumberInput').value;
+    y = document.getElementById('repNumberInput').value;
+    rbsmVar = document.getElementById('rbsm').value;
+    rbssVar = document.getElementById('rbss').value;
+    tfsi = document.getElementById('timeForSetInput').value;
+    if ((x % 1) != 0 || x == '') {
+        alert("Please input your sets as a number");
+        return false;
+    } else if ((y % 1) != 0 || y == '') {
+        alert("Please input your reps as a number");
+        return false;
+    } else if ((rbsmVar % 1) != 0 || rbsmVar == '') {
+        alert("Please input your Rest Between Sets as a number");
+        return false;
+    } else if ((rbssVar % 1) != 0 || rbssVar == '') {
+        alert("Please input your Rest Between Sets as a number");
+        return false;
+    } else if ((tfsi % 1) != 0 || tfsi == '') {
+        alert("Please input your time to do sets as a number");
+        return false;
+    } else {
+        form.submit();
     }
 
-    function createE(){
-        var form = document.getElementById('createExercise');
-        x = document.getElementById('setNumberInput').value;
-        y = document.getElementById('repNumberInput').value;
-        rbsmVar = document.getElementById('rbsm').value;
-        rbssVar = document.getElementById('rbss').value;
-        tfsi = document.getElementById('timeForSetInput').value;
-        if ((x%1) != 0 || x == ''){
-            alert("Please input your sets as a number");
-            return false;
-        }
-        else if ((y%1) != 0 || y ==''){
-            alert("Please input your reps as a number");
-            return false;
-        }
-        else if ((rbsmVar%1) != 0 || rbsmVar ==''){
-            alert("Please input your Rest Between Sets as a number");
-            return false;
-        }
-        else if ((rbssVar%1) != 0 || rbssVar ==''){
-            alert("Please input your Rest Between Sets as a number");
-            return false;
-        }
-        else if ((tfsi%1) != 0 || tfsi ==''){
-            alert("Please input your time to do sets as a number");
-            return false;
-        }
-        else{           
-            form.submit();
-        }
-       
+}
+
+function nameList() {
+    console.log('name list');
+    // document.getElementById('nameInput').value = 'Name is this';
+    document.getElementById('nameDiv').style.display = 'flex';
+}
+
+function addName(x) {
+    console.log(x);
+    document.getElementById('nameInput').value = x;
+    document.getElementById('nameDiv').style.display = 'none';
+}
+
+function createCustom() {
+    document.getElementById('nameDivItem2').style.display = 'flex';
+
+}
+
+function customNameGo() {
+    document.getElementById('nameInput').value = document.getElementById('nameInputCustom').value;
+    document.getElementById('nameDiv').style.display = 'none';
+
+}
+
+function showDesc(x) {
+    console.log(x)
+    var descDivs = document.getElementsByClassName('nameDescItem');
+    document.getElementById('nameDivDesc').style.display = 'flex';
+    descDivs[x - 1].style.display = 'flex';
+}
+
+function cancelDesc(x) {
+    console.log('x inside cancel is ' + x.toString());
+    var descDivs = document.getElementsByClassName('nameDescItem');
+    descDivs[x - 1].style.display = 'none';
+    document.getElementById('nameDivDesc').style.display = 'none';
+
+}
+
+function showDescSolo(x) {
+    var descDivs = document.getElementsByClassName('nameDescItem');
+
+    if (descDivs[x - 1] == null) {
+        console.log('x dont exist my dude.');
+        return;
     }
+    document.getElementById('createExercise').style.display = 'none';
+    document.getElementById('nameDivDesc').style.display = 'flex';
+    descDivs[x - 1].style.display = 'flex';
 
-        function nameList(){
-        console.log('name list');
-        // document.getElementById('nameInput').value = 'Name is this';
-        document.getElementById('nameDiv').style.display = 'flex';
-    }
-
-    function addName(x){
-        console.log(x);
-         document.getElementById('nameInput').value = x;
-        document.getElementById('nameDiv').style.display = 'none';
-    }
-
-    function createCustom(){
-        document.getElementById('nameDivItem2').style.display = 'flex'; 
-           
-    }
-
-    function customNameGo(){
-        document.getElementById('nameInput').value = document.getElementById('nameInputCustom').value;
-        document.getElementById('nameDiv').style.display = 'none';
-
-    }
-
-    function showDesc(x){
-        console.log(x)
-        var descDivs = document.getElementsByClassName('nameDescItem');
-        document.getElementById('nameDivDesc').style.display= 'flex';
-        descDivs[x-1].style.display = 'flex';
-    }
-
-    function cancelDesc(x){
-        console.log('x inside cancel is ' + x.toString());
-        var descDivs = document.getElementsByClassName('nameDescItem');
-        descDivs[x-1].style.display = 'none';
-        document.getElementById('nameDivDesc').style.display= 'none';
-        
-    }
-
-    function showDescSolo(x){
-        var descDivs = document.getElementsByClassName('nameDescItem');
-
-        if (descDivs[x-1] == null){
-            console.log('x dont exist my dude.');
-            return;
-        }
-                document.getElementById('createExercise').style.display = 'none';
-        document.getElementById('nameDivDesc').style.display= 'flex';
-        descDivs[x-1].style.display = 'flex';
-
-    }
-
-
-
-
-
-    
-
-
-
+}
 </script>
 
 </body>
